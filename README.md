@@ -7,4 +7,5 @@ Internet of Things (IoT) Smart Pantry interfaced with Firebase Cloud Firestore R
 
 #### Purpose: There is a need in the market for a product that will allow one to virtually be able to access their pantry from any location. How many times have you gone to the grocery stor and forgot your shopping list at home? With JAMSPantry you will be able to know exactly what products you have, the amount of items, and even the weight of an item. With the features provided in our application, you can even query information and data about the products such as expiration dates so you know exactly when a product may expire. 
 
+#### The ML Kit for barcode scanning will be used so machine learning will be applied to our project. 
 
