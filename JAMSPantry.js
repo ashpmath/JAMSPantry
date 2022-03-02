@@ -22,7 +22,7 @@
   const analytics = getAnalytics(app);
 </script>
 
-/*
+
 npm i firebase
 const { Firestore } = require("@firebase/firestore");
 // with Commonjs syntax (if using Node)
@@ -38,9 +38,21 @@ var firebaseConfig = {
   messagingSenderId: "616270824980",
   appId: "1:616270824990:web:40c8b177c6b9729cb5110f",
 };
+
+//create a constant variable db (database) so it easier to reference or refer to
+const db = firebase.firestore();
+
+/***
+ * Group Still is in the process of determining which
+ * one to use...leaning more towards Cloud Firestore to
+ * collect and store information since it is heavily
+ * used with IoT devices and offers an additional
+ * layer of security with REST API.
+ */
+
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-*/
 
 
 //Not sure which to use for Cloud Firestore
