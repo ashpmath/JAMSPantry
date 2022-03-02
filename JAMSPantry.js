@@ -21,3 +21,32 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+
+/*
+npm i firebase
+const { Firestore } = require("@firebase/firestore");
+// with Commonjs syntax (if using Node)
+const firebase = require("firebase/app");
+require("firebase/firestore");
+
+var firebaseConfig = {
+  apiKey: "AIzaSyDpLmM79mUqbMDBexFtOQOkSl0glxCW_ds",
+  authDomain: "lfasdfkjkjlkjl.firebaseapp.com",
+  databaseURL: "https://lfasdlkjkjlkjl.firebaseio.com",
+  projectId: "lfasdlkjkjlkjl",
+  storageBucket: "lfasdlkjkjlkjl.appspot.com",
+  messagingSenderId: "616270824980",
+  appId: "1:616270824990:web:40c8b177c6b9729cb5110f",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+*/
+
+
+//Not sure which to use for Cloud Firestore
+firebase.initializeApp(FirestoreConfig);
+firebase.initializeApp(Firestore);
+
+
+// Get Analytics
+firebase.FirestoreConfig.getAnalytics();
