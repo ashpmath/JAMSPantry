@@ -62,3 +62,6 @@ firebase.initializeApp(Firestore);
 
 // Get Analytics
 firebase.FirestoreConfig.getAnalytics();
+
+// Declare Collection
+const smartPantry = firebase.firestore().collection('food');
