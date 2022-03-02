@@ -9,3 +9,7 @@ Internet of Things (IoT) Smart Pantry interfaced with Firebase Cloud Firestore R
 
 #### The ML Kit for barcode scanning will be used so machine learning will be applied to our project. 
 
+
+## The following diagram is systematic overview of the project:
+
+ ![firebase_overview_with_proj](https://user-images.githubusercontent.com/73625048/156276160-daf1af66-9b9b-4344-8a84-1c64a62083ca.PNG)
