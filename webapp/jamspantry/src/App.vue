@@ -1,60 +1,55 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="inspire">
+    <v-app-bar app class="secondary" flat>
+      <v-container class="py-0 fill-height">
+        <v-avatar size="54px">
+          <img src="./assets/JAMSLogo.png" />
+        </v-avatar>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+        <v-btn v-for="link in links" :key="link" text>
+          {{ link }}
+        </v-btn>
 
-      <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+        <v-responsive max-width="260">
+          <v-autocomplete
+            class="primary"
+            prepend-inner-icon="mdi-magnify"
+            placeholder="Search Inventory"
+            :items=searchItems
+            flat
+            hide-details
+            dense
+            solo
+            rounded
+            auto-select-first
+          ></v-autocomplete>
+        </v-responsive>
+        <v-btn icon @click="toggleTheme"
+          ><v-icon>mdi-brightness-4</v-icon></v-btn
+        >
+      </v-container>
     </v-app-bar>
 
-    <v-main>
-      <HelloWorld/>
+    <v-main class="primary">
+      <v-container>
+        
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
   data: () => ({
-    //
+    links: ["Dashboard", "Inventory"],
+    searchItems: ["Apple", "Banana"], /// need to query db for this list
   }),
+  methods: {
+    toggleTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
+  },
 };
 </script>
