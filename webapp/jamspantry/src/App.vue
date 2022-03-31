@@ -44,7 +44,7 @@
 export default {
   data: () => ({
     links: ["Dashboard", "Inventory"],
-    searchItems: ["Apple", "Banana"], /// need to query db for this list
+    searchItems: ["Apple", "Banana", "Cereal", "Rice"], /// need to query db for this list
   }),
   methods: {
     toggleTheme() {
