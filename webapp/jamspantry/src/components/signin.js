@@ -1,3 +1,4 @@
+/*
 import { GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { getAuth, linkWithPopup, GoogleAuthProvider } from "firebase/auth";
 const provider = new GoogleAuthProvider();
@@ -13,7 +14,6 @@ var firebaseui = require('firebaseui');
 var ui = new firebaseui.auth.AuthUI(firebase.auth());   //initialize a new authentication UI 
 
 // EMAIL & PASSWORD - AUTHENTICATION from multiple social media platforms
-
 ui.start('#firebaseui-auth-container', {
     signInOptions: [
       // List of OAuth providers supported.
@@ -34,3 +34,6 @@ linkWithPopup(auth.currentUser, provider).then((result) => {
   // Handle Errors here.
   // ...
 });
+
+linkWithPopup(auth.currentUser, provider).then 
+*/
