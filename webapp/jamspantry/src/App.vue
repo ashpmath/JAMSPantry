@@ -3,33 +3,35 @@
     <v-app-bar app class="secondary" flat>
       <v-container class="py-0 fill-height">
         <v-img
-        style="cursor: pointer"
-        @click="$router.push('/dashboard')"
-        class="mx-2"
-        src="./assets/JAMSLogo.png"
-        max-height="40"
-        max-width="40"
-        contain
+          style="cursor: pointer"
+          @click="$router.push('/dashboard')"
+          class="mx-2"
+          src="./assets/JAMSLogo.png"
+          max-height="40"
+          max-width="40"
+          contain
         ></v-img>
         <v-toolbar-title
-        style="cursor: pointer"
-        @click="$router.push('/dashboard')"
-        ><h2>JAMS Pantry</h2></v-toolbar-title>
+          style="cursor: pointer"
+          @click="$router.push('/dashboard')"
+          ><h2>JAMS Pantry</h2></v-toolbar-title
+        >
         <v-spacer></v-spacer>
         <v-btn v-if="isSignedIn" class="accent" @click="logout">Logout</v-btn>
-        <v-btn icon @click="toggleTheme"><v-icon>mdi-brightness-4</v-icon></v-btn>
+        <v-btn icon @click="toggleTheme"
+          ><v-icon>mdi-brightness-4</v-icon></v-btn
+        >
       </v-container>
     </v-app-bar>
 
     <v-main class="ma-4"><router-view /></v-main>
     <toastItem ref="toastItem" />
-
   </v-app>
 </template>
 
 <script>
-import toastItem from "./components/Toast-Item.vue"
-import { signOut, getAuth } from "firebase/auth"
+import toastItem from "./components/Toast-Item.vue";
+import { signOut, getAuth } from "firebase/auth";
 export default {
   components: {
     toastItem,

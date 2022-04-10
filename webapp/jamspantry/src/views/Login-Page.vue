@@ -161,8 +161,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-} from "firebase/auth"
-import { auth } from "../firebase"
+} from "firebase/auth";
+import { auth } from "../firebase";
 
 export default {
   name: "Login-Page",
@@ -171,26 +171,26 @@ export default {
       if (this.$refs.forgetForm.validate()) {
         sendPasswordResetEmail(auth, this.forgetEmail)
           .then(() => {
-            this.$root.toastItem.show({ message: "Email sent!" })
-            this.dialog = false
+            this.$root.toastItem.show({ message: "Email sent!" });
+            this.dialog = false;
           })
           .catch((error) => {
-            this.$root.toastItem.show({ message: error.message })
-          })
+            this.$root.toastItem.show({ message: error.message });
+          });
       } else {
-        this.$root.toastItem.show({ message: "Not sent!" })
+        this.$root.toastItem.show({ message: "Not sent!" });
       }
     },
     validateLogin() {
       if (this.$refs.loginForm.validate()) {
         signInWithEmailAndPassword(auth, this.loginEmail, this.loginPassword)
           .then(() => {
-            this.$root.toastItem.show({ message: "Succesfully signed in!" })
-            this.$router.push("/dashboard")
+            this.$root.toastItem.show({ message: "Succesfully signed in!" });
+            this.$router.push("/dashboard");
           })
           .catch((error) => {
-            this.$root.toastItem.show({ message: error.message })
-          })
+            this.$root.toastItem.show({ message: error.message });
+          });
       }
     },
     validateSignUp() {
@@ -200,22 +200,22 @@ export default {
             .then(() => {
               this.$root.toastItem.show({
                 message: "Succesfully created an account!",
-              })
-              this.$router.push("/dashboard")
+              });
+              this.$router.push("/dashboard");
             })
             .catch((error) => {
-              this.$root.toastItem.show({ message: error.message })
-            })
+              this.$root.toastItem.show({ message: error.message });
+            });
         } else {
-          this.$root.toastItem.show({ message: "Passwords do not match." })
+          this.$root.toastItem.show({ message: "Passwords do not match." });
         }
       }
     },
     reset() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
     },
     resetValidation() {
-      this.$refs.form.resetValidation()
+      this.$refs.form.resetValidation();
     },
   },
   data: () => ({
@@ -242,5 +242,5 @@ export default {
       min: (v) => (v && v.length >= 8) || "Min 8 characters",
     },
   }),
-}
+};
 </script>
