@@ -26,6 +26,14 @@ const routes = [
       authRequired: true,
     },
   },
+  {
+    path: '/kiosk',
+    name: 'Kiosk',
+    component: () => import(/* webpackChunkName: "kiosk" */ '../views/Kiosk-Page.vue'),
+    meta: {
+      authRequired: true,
+    },
+  },
 ]
 
 const router = new VueRouter({

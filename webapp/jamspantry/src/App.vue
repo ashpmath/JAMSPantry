@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-app-bar app class="secondary" flat>
       <v-container class="py-0 fill-height">
         <v-img
