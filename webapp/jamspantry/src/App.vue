@@ -2,35 +2,22 @@
   <v-app id="inspire">
     <v-app-bar app class="secondary" flat>
       <v-container class="py-0 fill-height">
-        <v-avatar 
-        size="54px"
+        <v-img
+        style="cursor: pointer"
         @click="$router.push('/dashboard')"
-        ><img src="./assets/JAMSLogo.png" />
-        </v-avatar>
+        class="mx-2"
+        src="./assets/JAMSLogo.png"
+        max-height="40"
+        max-width="40"
+        contain
+        ></v-img>
         <v-toolbar-title
         style="cursor: pointer"
         @click="$router.push('/dashboard')"
-        ><h2>JAMSPantry</h2></v-toolbar-title>
-
+        ><h2>JAMS Pantry</h2></v-toolbar-title>
         <v-spacer></v-spacer>
-
-        <v-responsive max-width="260">
-          <v-autocomplete
-            class="primary"
-            prepend-inner-icon="mdi-magnify"
-            placeholder="Search Inventory"
-            :items=searchItems
-            flat
-            hide-details
-            dense
-            solo
-            rounded
-            auto-select-first
-          ></v-autocomplete>
-        </v-responsive>
-        <v-btn icon @click="toggleTheme"
-          ><v-icon>mdi-brightness-4</v-icon></v-btn
-        >
+        <v-btn v-if="isSignedIn" class="accent" @click="logout">Logout</v-btn>
+        <v-btn icon @click="toggleTheme"><v-icon>mdi-brightness-4</v-icon></v-btn>
       </v-container>
     </v-app-bar>
 

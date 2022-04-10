@@ -198,16 +198,16 @@ export default {
         if (this.password === this.verify) {
           createUserWithEmailAndPassword(auth, this.email, this.password)
             .then(() => {
-              this.$root.toast.show({
+              this.$root.toastItem.show({
                 message: "Succesfully created an account!",
               })
               this.$router.push("/dashboard")
             })
             .catch((error) => {
-              this.$root.toast.show({ message: error.message })
+              this.$root.toastItem.show({ message: error.message })
             })
         } else {
-          this.$root.toast.show({ message: "Passwords do not match." })
+          this.$root.toastItem.show({ message: "Passwords do not match." })
         }
       }
     },
