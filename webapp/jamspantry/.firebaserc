@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "jamspantry"
+  },
+  "targets": {
+    "senior-design-lab": {
+      "hosting": {
+        "default": [
+          "jamspantry"
+        ]
+      }
+    }
+  }
+}
