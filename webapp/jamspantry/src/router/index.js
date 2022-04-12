@@ -31,7 +31,7 @@ const routes = [
     name: 'Kiosk',
     component: () => import(/* webpackChunkName: "kiosk" */ '../views/Kiosk-Page.vue'),
     meta: {
-      authRequired: true,
+      // authRequired: true,
     },
   },
 ]
