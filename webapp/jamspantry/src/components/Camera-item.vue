@@ -40,7 +40,7 @@ export default {
   position: relative;
   width: auto;
   aspect-ratio: 4/3;
-  margin: 30px;
+  margin: 10px;
   padding: 0;
 }
 video {
