@@ -44,10 +44,6 @@ export default {
       return this.$route.name !== "Login" && this.$route.name !== "Poll";
     },
   },
-  data: () => ({
-    links: ["Dashboard", "Inventory"],
-    searchItems: ["Apple", "Banana", "Cereal", "Rice"], /// need to query db for this list
-  }),
   methods: {
     toggleTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
@@ -73,7 +69,7 @@ export default {
 </script>
 
 <style>
-.theme--light.v-sheet {
-    color: #1d1e1b;
+.v-snack__content {
+  color: #1d1e1b;
 }
 </style>
