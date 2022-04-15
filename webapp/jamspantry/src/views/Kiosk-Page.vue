@@ -47,13 +47,43 @@
       <v-stepper-content step="2">
         <v-container>
           <v-row>
-            <v-col align="center">
-              <v-date-picker v-model="expirationDate"> </v-date-picker>
+            <v-col>
+              <v-select
+                v-model="monthSelect"
+                :items="months"
+                label="Month"
+                outlined
+                @input="getValidDays"
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-select
+                v-model="daySelect"
+                :items="days"
+                label="Day"
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-select
+                v-model="yearSelect"
+                :items="years"
+                label="Year"
+                outlined
+              ></v-select>
             </v-col>
           </v-row>
           <v-row>
-            <v-btn color="secondary" @click="e1 = 3"> Continue </v-btn>
-            <v-btn text @click="e1 = 1"> Cancel </v-btn>
+            <v-btn color="secondary" @click="e1 = 3"> Next </v-btn>
+            <v-btn
+              text
+              @click="
+                e1 = 1;
+                resetForm();
+              "
+            >
+              Cancel
+            </v-btn>
           </v-row>
         </v-container>
       </v-stepper-content>
@@ -67,7 +97,15 @@
           <cameraItem />
         </div>
         <v-btn color="secondary" @click="e1 = 4">Next</v-btn>
-        <v-btn text @click="console.log(this.$router)"> Cancel </v-btn>
+        <v-btn
+          text
+          @click="
+            e1 = 1;
+            resetForm();
+          "
+        >
+          Cancel
+        </v-btn>
       </v-stepper-content>
 
       <!-- Overview -->
@@ -87,7 +125,15 @@
           "
           >Submit</v-btn
         >
-        <v-btn text @click="e1 = 1"> Cancel </v-btn>
+        <v-btn
+          text
+          @click="
+            e1 = 1;
+            resetForm();
+          "
+        >
+          Cancel
+        </v-btn>
       </v-stepper-content>
     </v-stepper>
   </v-container>
@@ -101,16 +147,46 @@ export default {
     cameraItem,
   },
   data: () => ({
-    e1: 1,
-    expirationDate: null,
-    inOutSelect: null,
+    e1: 2,
+    scanIn: null,
+    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    days: null,
+    years: Array((new Date().getFullYear()+100) - (new Date().getFullYear()) + 1)
+        .fill()
+        .map((_, idx) => new Date().getFullYear() + idx),
+    monthSelect: null,
+    daySelect: null,
+    yearSelect: null,
   }),
   methods: {
     addItem() {
       this.$root.toastItem.show({ message: "Item added!" });
+      this.resetForm();
     },
     removeItem() {
       this.$root.toastItem.show({ message: "Item removed!" });
+      this.resetForm();
+    },
+    range(start, end) {
+      return Array(end - start + 1)
+        .fill()
+        .map((_, idx) => start + idx);
+    },
+    getValidDays() {
+      if ([1, 3, 5, 7, 8, 10, 12].includes(this.monthSelect)) {
+        this.days = this.range(1, 31);
+      } else if (this.monthSelect == 2) {
+        this.days = this.range(1, 28);
+      } else {
+        this.days = this.range(1, 30);
+      }
+      this.daySelect = null;
+    },
+    resetForm() {
+      this.days = null;
+      this.monthSelect = null;
+      this.daySelect = null;
+      this.yearSelect = null;
     },
   },
 };
@@ -121,5 +197,8 @@ export default {
 }
 .theme--light.v-btn {
   color: #1d1e1b !important;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 </style>
