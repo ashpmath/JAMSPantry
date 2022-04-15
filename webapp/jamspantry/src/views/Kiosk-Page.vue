@@ -15,7 +15,7 @@
                 color="secondary"
                 @click="
                   e1 = 2;
-                  inOutSelect = 'IN';
+                  scanIn = true;
                 "
               >
                 <v-icon left> mdi-import </v-icon>
@@ -29,7 +29,7 @@
                 color="secondary"
                 @click="
                   e1 = 3;
-                  inOutSelect = 'OUT';
+                  scanIn = false;
                 "
               >
                 <v-icon left> mdi-export </v-icon>
@@ -75,7 +75,18 @@
         Overview
       </v-stepper-step>
       <v-stepper-content step="4">
-        <v-btn color="secondary" @click="e1 = 1">Submit</v-btn>
+        <v-btn
+          color="secondary"
+          @click="
+            e1 = 1;
+            if (scanIn) {
+              addItem();
+            } else {
+              removeItem();
+            }
+          "
+          >Submit</v-btn
+        >
         <v-btn text @click="e1 = 1"> Cancel </v-btn>
       </v-stepper-content>
     </v-stepper>
@@ -96,27 +107,19 @@ export default {
   }),
   methods: {
     addItem() {
-      // process close date
-      var dCur = new Date(this.expirationDate);
-      var expirationDateMod = "";
-      if (this.expirationDate != null) {
-        expirationDateMod =
-          dCur.getFullYear() +
-          "-" +
-          (dCur.getMonth() + 1) +
-          "-" +
-          (dCur.getDate() + 1);
-      }
-      return expirationDateMod;
+      this.$root.toastItem.show({ message: "Item added!" });
+    },
+    removeItem() {
+      this.$root.toastItem.show({ message: "Item removed!" });
     },
   },
 };
 </script>
 <style>
 .theme--light.v-stepper .v-stepper__step__step .v-icon {
-  color: black !important;
+  color: #1d1e1b !important;
 }
 .theme--light.v-btn {
-  color: black !important;
+  color: #1d1e1b !important;
 }
 </style>

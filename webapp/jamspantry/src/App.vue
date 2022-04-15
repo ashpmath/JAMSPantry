@@ -4,7 +4,7 @@
       <v-container class="py-0 fill-height">
         <v-img
           style="cursor: pointer"
-          @click="$router.push('/dashboard')"
+          @click="logoClick"
           class="mx-2"
           src="./assets/JAMSLogo.png"
           max-height="40"
@@ -13,11 +13,11 @@
         ></v-img>
         <v-toolbar-title
           style="cursor: pointer"
-          @click="$router.push('/dashboard')"
+          @click="logoClick"
           ><h2>JAMS Pantry</h2></v-toolbar-title
         >
         <v-spacer></v-spacer>
-        <v-btn v-if="isSignedIn" class="accent" @click="logout">Logout</v-btn>
+        <v-btn v-if="isSignedIn && this.$route.name !== 'Kiosk'" class="accent" @click="logout">Logout</v-btn>
         <v-btn icon @click="toggleTheme"
           ><v-icon>mdi-brightness-4</v-icon></v-btn
         >
@@ -63,6 +63,17 @@ export default {
           this.$router.push("/");
         });
     },
+    logoClick() {
+      if ( this.$route.name !== 'Kiosk') {
+        this.$router.push('/dashboard')
+      }
+    }
   },
 };
 </script>
+
+<style>
+.theme--light.v-sheet {
+    color: #1d1e1b;
+}
+</style>
