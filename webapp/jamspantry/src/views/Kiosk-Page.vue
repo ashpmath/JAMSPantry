@@ -94,9 +94,10 @@
       </v-stepper-step>
       <v-stepper-content step="3">
         <div id="cameraDiv">
-          <cameraItem />
+          <StreamBarcodeReader
+            @decode="onDecode"
+          ></StreamBarcodeReader>
         </div>
-        <v-btn color="secondary" @click="e1 = 4">Next</v-btn>
         <v-btn
           text
           @click="
@@ -113,53 +114,100 @@
         Overview
       </v-stepper-step>
       <v-stepper-content step="4">
-        <v-btn
-          color="secondary"
-          @click="
-            e1 = 1;
-            if (scanIn) {
-              addItem();
-            } else {
-              removeItem();
-            }
-          "
-          >Submit</v-btn
-        >
-        <v-btn
-          text
-          @click="
-            e1 = 1;
-            resetForm();
-          "
-        >
-          Cancel
-        </v-btn>
+        <v-container>
+          <v-col>
+            <v-row>
+              <v-img
+                :max-height="100"
+                :max-width="250"
+                contain
+                v-bind:src="getImageURL()"
+              ></v-img>
+            </v-row>
+            <v-row>
+              <v-textarea
+                label="Description"
+                outlined
+                disabled
+                rows="3"
+                no-resize
+                :value="getDescription()"
+              ></v-textarea>
+            </v-row>
+            <v-row>
+              <v-textarea
+                label="Expiration Date"
+                outlined
+                disabled
+                rows="1"
+                no-resize
+                :value="getExpiration()"
+              ></v-textarea>
+            </v-row>
+            <v-row>
+              <v-btn
+                color="secondary"
+                @click="
+                  e1 = 1;
+                  if (scanIn) {
+                    addItem();
+                  } else {
+                    removeItem();
+                  }
+                "
+                >Submit</v-btn
+              >
+              <v-btn
+                text
+                @click="
+                  e1 = 1;
+                  resetForm();
+                "
+              >
+                Cancel
+              </v-btn>
+            </v-row>
+          </v-col>
+        </v-container>
       </v-stepper-content>
     </v-stepper>
   </v-container>
 </template>
 
 <script>
-import cameraItem from "../components/Camera-Item.vue";
+import { StreamBarcodeReader } from "vue-barcode-reader";
+import { db, auth } from "../firebase";
+import { push, ref } from "firebase/database";
 export default {
-  name: "cameraDiv",
   components: {
-    cameraItem,
+    StreamBarcodeReader,
   },
   data: () => ({
-    e1: 2,
+    e1: 1,
     scanIn: null,
     months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     days: null,
-    years: Array((new Date().getFullYear()+100) - (new Date().getFullYear()) + 1)
-        .fill()
-        .map((_, idx) => new Date().getFullYear() + idx),
+    years: Array(new Date().getFullYear() + 100 - new Date().getFullYear() + 1)
+      .fill()
+      .map((_, idx) => new Date().getFullYear() + idx),
     monthSelect: null,
     daySelect: null,
     yearSelect: null,
+
+    // data from barcode monster api
+    scannedItem: null,
+    description: "",
+    image_url: "",
   }),
   methods: {
     addItem() {
+      // add expiration date to the item json
+      this.scannedItem["expiration"] = this.getExpiration();
+
+      // push json to users inventory in firebase
+      push(ref(db, auth.currentUser.uid + "/inventory"), this.scannedItem);
+
+      // push a toast message and reset vars
       this.$root.toastItem.show({ message: "Item added!" });
       this.resetForm();
     },
@@ -187,6 +235,49 @@ export default {
       this.monthSelect = null;
       this.daySelect = null;
       this.yearSelect = null;
+      this.scannedItem = null;
+      this.image_url = null;
+    },
+    onDecode(code) {
+      // only decode when on the scan step
+      if (this.e1 == 3) {
+        // http GET from barcode monster api
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open(
+          "GET",
+          "https://barcode-monster.p.rapidapi.com/" + code,
+          false // for synchronous request
+        );
+        xmlHttp.send(null);
+        this.scannedItem = JSON.parse(xmlHttp.responseText);
+
+        // parse JSON into values
+        this.scannedItem.description = this.scannedItem.description.replace(
+          "(from barcode.monster)",
+          ""
+        );
+        this.description = this.scannedItem.description;
+        this.image_url = this.scannedItem.image_url;
+
+        // go to Overview Page
+        this.e1 = 4;
+      }
+    },
+    getDescription() {
+      if (this.description != "") {
+        return this.description;
+      }
+      return "Description not available.";
+    },
+    getImageURL() {
+      if (this.image_url != "") {
+        return this.image_url;
+      }
+      return "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png";
+    },
+
+    getExpiration() {
+      return this.monthSelect + "/" + this.daySelect + "/" + this.yearSelect;
     },
   },
 };

@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "firebase": "^9.6.10",
-    "vue-google-signin-button": "^1.0.4",
+    "vue-barcode-reader": "^1.0.2",
     "vue-router": "^3.5.3",
     "vuetify": "^2.6.0"
   },
