@@ -21,9 +21,10 @@ BLEStringCharacteristic rxChar("6E400003-B5A3-F393-E0A9-E50E24DCCA9E", BLERead |
 BLEService essService("181A");
 BLEShortCharacteristic tempChar("2A6E", BLERead | BLENotify );
 BLEShortCharacteristic humChar("2A6F", BLERead | BLENotify );
+BLEShortCharacteristic weightChar("2A9E", BLEREAD | BLENotify ); // weight measurement scale, may need to change when testing.
 
 // Weight Sensor
-HX711 scale(DOUT, CLK);
+HX711 scale(DOUT, CLK);   //intialzize scale - DOUT is connected to digital pin 3 and clock is connected to pin 2 on nano
 
 float temp = 0.0;
 float hum = 0.0;
@@ -34,7 +35,7 @@ float calibration_factor = -96650; // calibration factor
 void setup() 
 {
   Serial.begin(9600);
-  Serial.println("Press T to tare");
+  Serial.println("Press T to tare");    
   scale.set_scale(calibration_factor);  //Calibration Factor obtained from first sketch
   scale.tare();                         //Reset the scale to 0 
   
@@ -81,8 +82,8 @@ void loop()
 
   if(Serial.available())
   {
-    char temp = Serial.read();
-    if(temp == 't' || temp == 'T')
+    char t = Serial.read();
+    if(t == 't' || t == 'T')
       scale.tare();  //Reset the scale to zero      
   }
   
@@ -135,20 +136,36 @@ void loop()
       // TODO: Get temperature from Arduino sensor (per Lab 1)
       temp = HTS.readTemperature();
       hum = HTS.readHumidity();
+      weight = scale.getWeight();
+
+      if( weight != 0 ){
+        float fullMass = 100.0;
+        float noMass = 0.0;
+
+        totalPercentage = (weight/fullMass)*100;
+
+      }
+      else{
+        println("Error - NO MASS");
+      }
       //temp = round((HTS.readTemperature())*100.0);
       
       Serial.print("Temp: ");
       Serial.println(temp);
       Serial.print("Hum: ");
       Serial.print(hum);
+      Serial.print("Container Capacity (%): ");
+      Serial.println(totalPercentage);
 
       // Cast to desired format; multiply by 100 to keep desired precision.
       short shortTemp = (short) (temp * 100);
       short shortHum = (short) (hum * 100);
+      short shortWeight = (short) (totalPercentage * 100); 
 
       // Send data to centeral for temperature characteristic.
       tempChar.writeValue( shortTemp );
       humChar.writeValue( shortHum );
+      weightChar.writeValue( shortWeight );
 
       Serial.println(interval);
       delay(interval);
