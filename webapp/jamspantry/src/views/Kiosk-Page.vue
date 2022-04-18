@@ -248,6 +248,8 @@ export default {
           "https://barcode-monster.p.rapidapi.com/" + code,
           false // for synchronous request
         );
+        xmlHttp.setRequestHeader("X-RapidAPI-Host", "barcode-monster.p.rapidapi.com");
+        xmlHttp.setRequestHeader("X-RapidAPI-Key", "76579cba9emsh57068918fcc1d42p13ba42jsnaa6b82d06bd2");
         xmlHttp.send(null);
         this.scannedItem = JSON.parse(xmlHttp.responseText);
 
