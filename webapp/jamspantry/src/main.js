@@ -34,3 +34,6 @@ new Vue({
 Vue.use(VueAnalytics, {
   id: 'UA-xxxxxxxxx-x'   // we will need to change this part once setup
 });
+
+// track events
+this.$analytics.logEvent("notification_received");
