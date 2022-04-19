@@ -6,19 +6,6 @@ import VueAnalytics from 'vue-analytics';  // Analytics - type "npm install vue-
 import { initializeApp } from "firebase/app";   
 import { getAnalytics } from "firebase/analytics"; // Firebase Anayltics
 
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
-
-// Configuration VueAnalytics
-Vue.use(VueAnalytics, {
-  id: 'UA-xxxxxxxxx-x'   // we will need to change this part once setup
-});
-
 // ANALYTICS PART 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -31,3 +18,19 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Analytics and get a reference to the service
 const analytics = getAnalytics(app);
+
+// alias
+Vue.prototype.$analytics = firebase.analytics();
+
+Vue.config.productionTip = false
+
+new Vue({
+  router,
+  vuetify,
+  render: h => h(App)
+}).$mount('#app')
+
+// Configuration VueAnalytics
+Vue.use(VueAnalytics, {
+  id: 'UA-xxxxxxxxx-x'   // we will need to change this part once setup
+});
