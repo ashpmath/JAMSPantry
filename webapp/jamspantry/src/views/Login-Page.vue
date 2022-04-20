@@ -252,3 +252,14 @@ export default {
   }),
 };
 </script>
+<style>
+.theme--light.v-tabs--icons-and-text > .v-tabs-bar .v-tab > *:first-child {
+  color: #1b1c19 !important;
+}
+.theme--light.v-tabs-bar.primary .v-tab { 
+  color: #1b1c19 !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+</style>
