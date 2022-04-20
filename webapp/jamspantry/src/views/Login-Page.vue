@@ -10,7 +10,7 @@
         <v-tabs
           v-model="tab"
           show-arrows
-          background-color="primary"
+          background-color="secondary"
           icons-and-text
           grow
         >
@@ -98,7 +98,7 @@
                     </v-dialog>
                     <v-btn
                       :disabled="!valid"
-                      color="secondary"
+                      color="accent"
                       @click="validateLogin"
                     >
                       Login
@@ -149,7 +149,7 @@
                     <v-spacer></v-spacer>
                     <v-btn
                       :disabled="!valid"
-                      color="secondary"
+                      color="accent"
                       @click="validateSignUp"
                       >Register</v-btn
                     >
@@ -256,7 +256,7 @@ export default {
 .theme--light.v-tabs--icons-and-text > .v-tabs-bar .v-tab > *:first-child {
   color: #1b1c19 !important;
 }
-.theme--light.v-tabs-bar.primary .v-tab { 
+.theme--light.v-tabs-bar .v-tab { 
   color: #1b1c19 !important;
 }
 ::-webkit-scrollbar {

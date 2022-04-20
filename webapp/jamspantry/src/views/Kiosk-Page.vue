@@ -322,4 +322,7 @@ export default {
 .otpScaler {
   zoom: 0.82;
 }
+.theme--light.v-application .primary {
+    background-color: #cacac6 !important;
+}
 </style>
