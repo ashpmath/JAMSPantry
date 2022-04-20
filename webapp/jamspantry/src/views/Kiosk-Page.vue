@@ -14,6 +14,7 @@
                 width="210px"
                 color="secondary"
                 @click="
+                  resetForm();
                   e1 = 2;
                   scanIn = true;
                 "
@@ -28,8 +29,10 @@
                 width="210px"
                 color="secondary"
                 @click="
-                  e1 = 3;
+                  resetForm();
                   scanIn = false;
+                  e1 = 3;
+                  $refs.barcode.focus();
                 "
               >
                 <v-icon left> mdi-export </v-icon>
@@ -74,7 +77,15 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn color="secondary" @click="e1 = 3"> Next </v-btn>
+            <v-btn
+              color="secondary"
+              @click="
+                e1 = 3;
+                $refs.barcode.focus();
+              "
+            >
+              Next
+            </v-btn>
             <v-btn
               text
               @click="
@@ -88,75 +99,24 @@
         </v-container>
       </v-stepper-content>
 
-      <!-- Camera Viewer -->
+      <!-- Scan Barcode -->
       <v-stepper-step step="3" complete complete-icon="mdi-barcode-scan">
         Scan Barcode
       </v-stepper-step>
       <v-stepper-content step="3">
-        <div id="cameraDiv">
-          <StreamBarcodeReader
-            @decode="onDecode"
-          ></StreamBarcodeReader>
-        </div>
-        <v-btn
-          text
-          @click="
-            e1 = 1;
-            resetForm();
-          "
-        >
-          Cancel
-        </v-btn>
-      </v-stepper-content>
-
-      <!-- Overview -->
-      <v-stepper-step step="4" complete complete-icon="mdi-playlist-check">
-        Overview
-      </v-stepper-step>
-      <v-stepper-content step="4">
         <v-container>
           <v-col>
             <v-row>
-              <v-img
-                :max-height="100"
-                :max-width="250"
-                contain
-                v-bind:src="getImageURL()"
-              ></v-img>
+              <v-otp-input
+                class="otpScaler"
+                v-model="barcode"
+                color="#1b1c19"
+                ref="barcode"
+                length="12"
+                @finish="decode"
+              ></v-otp-input>
             </v-row>
             <v-row>
-              <v-textarea
-                label="Description"
-                outlined
-                disabled
-                rows="3"
-                no-resize
-                :value="getDescription()"
-              ></v-textarea>
-            </v-row>
-            <v-row>
-              <v-textarea
-                label="Expiration Date"
-                outlined
-                disabled
-                rows="1"
-                no-resize
-                :value="getExpiration()"
-              ></v-textarea>
-            </v-row>
-            <v-row>
-              <v-btn
-                color="secondary"
-                @click="
-                  e1 = 1;
-                  if (scanIn) {
-                    addItem();
-                  } else {
-                    removeItem();
-                  }
-                "
-                >Submit</v-btn
-              >
               <v-btn
                 text
                 @click="
@@ -170,18 +130,77 @@
           </v-col>
         </v-container>
       </v-stepper-content>
+
+      <!-- Overview -->
+      <v-stepper-step step="4" complete complete-icon="mdi-playlist-check">
+        Overview
+      </v-stepper-step>
+      <v-stepper-content step="4">
+        <v-container>
+          <v-row>
+            <v-col>
+              <v-img
+                class="mb-2"
+                :max-height="150"
+                :max-width="150"
+                contain
+                v-bind:src="getImageURL()"
+              ></v-img>
+            </v-col>
+            <v-col>
+              <v-textarea
+                label="Expiration Date"
+                outlined
+                disabled
+                rows="1"
+                no-resize
+                :value="getExpiration()"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-textarea
+              label="Description"
+              outlined
+              disabled
+              rows="3"
+              no-resize
+              :value="getDescription()"
+            ></v-textarea>
+          </v-row>
+          <v-row>
+            <v-btn
+              color="secondary"
+              @click="
+                e1 = 1;
+                if (scanIn) {
+                  addItem();
+                } else {
+                  removeItem();
+                }
+              "
+              >Submit</v-btn
+            >
+            <v-btn
+              text
+              @click="
+                e1 = 1;
+                resetForm();
+              "
+            >
+              Cancel
+            </v-btn>
+          </v-row>
+        </v-container>
+      </v-stepper-content>
     </v-stepper>
   </v-container>
 </template>
 
 <script>
-import { StreamBarcodeReader } from "vue-barcode-reader";
 import { db, auth } from "../firebase";
 import { push, ref } from "firebase/database";
 export default {
-  components: {
-    StreamBarcodeReader,
-  },
   data: () => ({
     e1: 1,
     scanIn: null,
@@ -195,10 +214,14 @@ export default {
     yearSelect: null,
 
     // data from barcode monster api
+    barcode: "",
     scannedItem: null,
     description: "",
     image_url: "",
   }),
+  mounted() {
+      this.$vuetify.theme.dark = false;
+  },
   methods: {
     addItem() {
       // add expiration date to the item json
@@ -209,11 +232,9 @@ export default {
 
       // push a toast message and reset vars
       this.$root.toastItem.show({ message: "Item added!" });
-      this.resetForm();
     },
     removeItem() {
       this.$root.toastItem.show({ message: "Item removed!" });
-      this.resetForm();
     },
     range(start, end) {
       return Array(end - start + 1)
@@ -237,33 +258,37 @@ export default {
       this.yearSelect = null;
       this.scannedItem = null;
       this.image_url = null;
+      this.barcode = null;
     },
-    onDecode(code) {
-      // only decode when on the scan step
-      if (this.e1 == 3) {
-        // http GET from barcode monster api
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open(
-          "GET",
-          "https://barcode-monster.p.rapidapi.com/" + code,
-          false // for synchronous request
-        );
-        xmlHttp.setRequestHeader("X-RapidAPI-Host", "barcode-monster.p.rapidapi.com");
-        xmlHttp.setRequestHeader("X-RapidAPI-Key", "76579cba9emsh57068918fcc1d42p13ba42jsnaa6b82d06bd2");
-        xmlHttp.send(null);
-        this.scannedItem = JSON.parse(xmlHttp.responseText);
+    decode(code) {
+      // http GET from barcode monster api
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open(
+        "GET",
+        "https://barcode-monster.p.rapidapi.com/" + code,
+        false // for synchronous request
+      );
+      xmlHttp.setRequestHeader(
+        "X-RapidAPI-Host",
+        "barcode-monster.p.rapidapi.com"
+      );
+      xmlHttp.setRequestHeader(
+        "X-RapidAPI-Key",
+        "76579cba9emsh57068918fcc1d42p13ba42jsnaa6b82d06bd2"
+      );
+      xmlHttp.send(null);
+      this.scannedItem = JSON.parse(xmlHttp.responseText);
 
-        // parse JSON into values
-        this.scannedItem.description = this.scannedItem.description.replace(
-          "(from barcode.monster)",
-          ""
-        );
-        this.description = this.scannedItem.description;
-        this.image_url = this.scannedItem.image_url;
+      // parse JSON into values
+      this.scannedItem.description = this.scannedItem.description.replace(
+        "(from barcode.monster)",
+        ""
+      );
+      this.description = this.scannedItem.description;
+      this.image_url = this.scannedItem.image_url;
 
-        // go to Overview Page
-        this.e1 = 4;
-      }
+      // go to Overview Page
+      this.e1 = 4;
     },
     getDescription() {
       if (this.description != "") {
@@ -293,5 +318,8 @@ export default {
 }
 ::-webkit-scrollbar {
   display: none;
+}
+.otpScaler {
+  zoom: 0.82;
 }
 </style>
