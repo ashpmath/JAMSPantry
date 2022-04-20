@@ -31,6 +31,7 @@
                     v-model="loginEmail"
                     :rules="emailRules"
                     label="E-mail"
+                    @keyup.enter="$refs.email.focus()"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -43,6 +44,7 @@
                     hint="At least 8 characters"
                     ref="email"
                     counter
+                    @keyup.enter="validateLogin"
                     @click:append="show1 = !show1"
                   ></v-text-field>
                   <v-card-actions class="pt-4">
@@ -71,6 +73,7 @@
                               :rules="emailRules"
                               label="E-mail"
                               required
+                              @keyup.enter="validateForget"
                             ></v-text-field>
                             <v-card-actions class="pt-4">
                               <v-spacer></v-spacer>
@@ -113,6 +116,7 @@
                     v-model="email"
                     :rules="emailRules"
                     label="E-mail"
+                    @keyup.enter="$refs.pass1.focus()"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -121,9 +125,11 @@
                     :rules="[rules.required, rules.min]"
                     :type="show1 ? 'text' : 'password'"
                     name="input-10-1"
+                    ref="pass1"
                     label="Password"
                     hint="At least 8 characters"
                     counter
+                    @keyup.enter="$refs.pass2.focus()"
                     @click:append="show1 = !show1"
                   ></v-text-field>
                   <v-text-field
@@ -133,8 +139,10 @@
                     :rules="[rules.required, rules.min]"
                     :type="show1 ? 'text' : 'password'"
                     name="input-10-1"
+                    ref="pass2"
                     label="Confirm Password"
                     counter
+                    @keyup.enter="validateSignUp"
                     @click:append="show1 = !show1"
                   ></v-text-field>
                   <v-card-actions class="pt-4">
