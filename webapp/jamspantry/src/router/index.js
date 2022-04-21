@@ -43,9 +43,17 @@ const routes = [
     },
   },
   {
-    path: '/remote-login',
+    path: '/remote-login/:key',
     name: 'Remote Login',
     component: () => import(/* webpackChunkName: "remote-login" */ '../views/Remote-Login-Page.vue'),
+    meta: {
+      authRequired: false,
+    },
+  },
+  {
+    path: '/remote-confirmation',
+    name: 'Remote Confirmation',
+    component: () => import(/* webpackChunkName: "remote-confirmation" */ '../views/Remote-Confirmation.vue'),
     meta: {
       authRequired: false,
     },

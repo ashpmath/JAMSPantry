@@ -170,7 +170,8 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { db, auth } from "../firebase";
+import { update, ref } from "firebase/database";
 
 export default {
   name: "Login-Page",
@@ -194,7 +195,10 @@ export default {
         signInWithEmailAndPassword(auth, this.loginEmail, this.loginPassword)
           .then(() => {
             this.$root.toastItem.show({ message: "Succesfully signed in!" });
-            this.$router.push("/dashboard");
+            const keyToPush = {};
+            keyToPush[this.$route.params.key] = auth.currentUser.uid;
+            update(ref(db, "keys/"), keyToPush);
+            this.$router.push("/remote-confirmation");
           })
           .catch((error) => {
             this.$root.toastItem.show({ message: error.message });
@@ -209,7 +213,10 @@ export default {
               this.$root.toastItem.show({
                 message: "Succesfully created an account!",
               });
-              this.$router.push("/dashboard");
+              const keyToPush = {};
+              keyToPush[this.$route.params.key] = auth.currentUser.uid;
+              update(ref(db, "keys/"), keyToPush);
+              this.$router.push("/remote-confirmation");
             })
             .catch((error) => {
               this.$root.toastItem.show({ message: error.message });
@@ -256,7 +263,7 @@ export default {
 .theme--light.v-tabs--icons-and-text > .v-tabs-bar .v-tab > *:first-child {
   color: #1b1c19 !important;
 }
-.theme--light.v-tabs-bar .v-tab { 
+.theme--light.v-tabs-bar .v-tab {
   color: #1b1c19 !important;
 }
 ::-webkit-scrollbar {

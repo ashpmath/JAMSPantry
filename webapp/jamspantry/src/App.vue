@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     isSignedIn() {
-      return (this.$route.name !== "Login") && (this.$route.name !== 'Kiosk Login') && (this.$route.name !== 'Kiosk') && (this.$route.name !== 'Remote Login')
+      return (this.$route.name !== "Login") && (this.$route.name !== 'Kiosk Login') && (this.$route.name !== 'Kiosk') && (this.$route.name !== 'Remote Login') && (this.$route.name !== 'Remote Confirmation')
     },
   },
   methods: {
