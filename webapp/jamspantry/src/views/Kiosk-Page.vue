@@ -198,7 +198,7 @@
 </template>
 
 <script>
-import { db, auth } from "../firebase";
+import { db } from "../firebase";
 import { push, ref } from "firebase/database";
 export default {
   data: () => ({
@@ -212,6 +212,7 @@ export default {
     monthSelect: null,
     daySelect: null,
     yearSelect: null,
+    uid: null,
 
     // data from barcode monster api
     barcode: "",
@@ -220,7 +221,10 @@ export default {
     image_url: "",
   }),
   mounted() {
-      this.$vuetify.theme.dark = false;
+    this.$vuetify.theme.dark = false;
+
+    // store the uid got from the kiosk login page
+    this.uid = this.$route.params.uid;
   },
   methods: {
     addItem() {
@@ -228,7 +232,7 @@ export default {
       this.scannedItem["expiration"] = this.getExpiration();
 
       // push json to users inventory in firebase
-      push(ref(db, auth.currentUser.uid + "/inventory"), this.scannedItem);
+      push(ref(db, this.uid + "/inventory"), this.scannedItem);
 
       // push a toast message and reset vars
       this.$root.toastItem.show({ message: "Item added!" });
@@ -323,6 +327,6 @@ export default {
   zoom: 0.82;
 }
 .theme--light.v-application .primary {
-    background-color: #cacac6 !important;
+  background-color: #cacac6 !important;
 }
 </style>

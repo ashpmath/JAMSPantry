@@ -27,7 +27,7 @@
 <script>
 import VueQr from "vue-qr";
 import { db } from "../firebase";
-import { push, ref } from "firebase/database";
+import { push, ref, onValue, remove } from "firebase/database";
 export default {
   name: "Kiosk-Login-Page",
   data: () => ({ key: "1234" }),
@@ -44,12 +44,27 @@ export default {
     // push a unique key to firebase with 'pending' value
     // and the key will get put into the qr code
     this.key = push(ref(db, "/keys"), "pending")._path.pieces_[1];
+
+    // start firebase listener on the key generated for the value to
+    // get changed to the user id meaing the user signed in on other
+    // device and wrote their user id
+    onValue(ref(db, "/keys", this.key), (snapshot) => {
+      const uid = snapshot.val()[this.key];
+      if (uid != "pending") {
+        // delete the key from database
+        remove(ref(db, "keys/" + this.key));
+
+        // route to the kiosk page and pass it the uid to use to 
+        // push inventory to the database
+        this.$router.push({ name: "Kiosk", params: {"uid":uid} });
+      }
+    });
   },
   computed: {
     qrStyle() {
       if (this.$vuetify.theme.dark) {
         return {
-          filter: "invert(81%) brightness(65%)",
+          filter: "invert(87%) brightness(90%)",
         };
       }
       return "";
