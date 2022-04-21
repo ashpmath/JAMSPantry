@@ -3,24 +3,20 @@
     <v-row align="center" justify="center">
       <v-card
         class="justify-center"
-        max-width="350px"
-        min-width="350px"
+        max-width="425px"
+        min-width="425px"
         elevation="16"
       >
-        <v-tabs
-          background-color="secondary"
-          icons-and-text
-          grow
-        >
+        <v-tabs background-color="secondary" icons-and-text grow>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab :key="0">
             <v-icon>mdi-key-wireless</v-icon>
-            <v-card-title  class="pa-0"> Remote Login </v-card-title>
+            <v-card-title class="pa-0"> Remote Login </v-card-title>
           </v-tab>
           <v-tab-item> </v-tab-item>
         </v-tabs>
-        <vue-qr v-bind:text="getQrCode()" :size="350"></vue-qr>
-        <v-card-text class="text-center pa-0 mb-2">
+        <vue-qr :style="qrStyle" v-bind:text="getQrCode()" :size="425"></vue-qr>
+        <v-card-text class="text-center pa-0 mb-2" style="font-size: 1.1em">
           Scan the QR code above to login on another device.
         </v-card-text>
       </v-card>
@@ -49,13 +45,23 @@ export default {
     // and the key will get put into the qr code
     this.key = push(ref(db, "/keys"), "pending")._path.pieces_[1];
   },
+  computed: {
+    qrStyle() {
+      if (this.$vuetify.theme.dark) {
+        return {
+          filter: "invert(81%) brightness(65%)",
+        };
+      }
+      return "";
+    },
+  },
 };
 </script>
 <style>
 .theme--light.v-tabs--icons-and-text > .v-tabs-bar .v-tab > *:first-child {
   color: #1b1c19 !important;
 }
-.theme--light.v-tabs-bar .v-tab { 
+.theme--light.v-tabs-bar .v-tab {
   color: #1b1c19 !important;
 }
 ::-webkit-scrollbar {
