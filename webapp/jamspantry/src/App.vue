@@ -17,7 +17,7 @@
           ><h2>JAMS Pantry</h2></v-toolbar-title
         >
         <v-spacer></v-spacer>
-        <v-btn v-if="isSignedIn && this.$route.name !== 'Kiosk'" class="accent" @click="logout">Logout</v-btn>
+        <v-btn v-if="isSignedIn" class="accent" @click="logout">Logout</v-btn>
         <v-btn icon @click="toggleTheme"
           ><v-icon>mdi-brightness-4</v-icon></v-btn
         >
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     isSignedIn() {
-      return this.$route.name !== "Login" && this.$route.name !== "Poll";
+      return (this.$route.name !== "Login") && (this.$route.name !== 'Kiosk Login') && (this.$route.name !== 'Kiosk') && (this.$route.name !== 'Remote Login')
     },
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
         });
     },
     logoClick() {
-      if ( this.$route.name !== 'Kiosk') {
+      if ((this.$route.name !== "Login") && (this.$route.name !== 'Kiosk Login') && (this.$route.name !== 'Kiosk') && (this.$route.name !== 'Remote Login')) {
         this.$router.push('/dashboard')
       }
     }

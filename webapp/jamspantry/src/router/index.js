@@ -31,7 +31,23 @@ const routes = [
     name: 'Kiosk',
     component: () => import(/* webpackChunkName: "kiosk" */ '../views/Kiosk-Page.vue'),
     meta: {
-      authRequired: true,
+      authRequired: false,
+    },
+  },
+  {
+    path: '/kiosk-login',
+    name: 'Kiosk Login',
+    component: () => import(/* webpackChunkName: "kiosk-login" */ '../views/Kiosk-Login-Page.vue'),
+    meta: {
+      authRequired: false,
+    },
+  },
+  {
+    path: '/remote-login',
+    name: 'Remote Login',
+    component: () => import(/* webpackChunkName: "remote-login" */ '../views/Remote-Login-Page.vue'),
+    meta: {
+      authRequired: false,
     },
   },
 ]

@@ -10,7 +10,9 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "firebase": "^9.6.10",
+    "qrcode": "^1.5.0",
     "vue-barcode-reader": "^1.0.2",
+    "vue-qr": "^4.0.6",
     "vue-router": "^3.5.3",
     "vuetify": "^2.6.0"
   },
