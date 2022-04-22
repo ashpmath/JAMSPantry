@@ -63,3 +63,8 @@ var values = json.map(function (e) {
 });
 console.log(values);
 var chart = BuildChart(labels, values, "Product Analytics by Expiration Date");
+
+
+/**
+ * Resource: https://css-tricks.com/the-many-ways-of-getting-data-into-charts/
+ */
