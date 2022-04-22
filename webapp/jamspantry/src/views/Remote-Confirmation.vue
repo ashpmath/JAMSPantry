@@ -16,7 +16,7 @@
           <v-tab-item> </v-tab-item>
         </v-tabs>
         <v-card-text class="text-center pa-0 mt-4 mb-4" style="font-size: 1.1em">
-          The remote login was successfu, you can now close this page.
+          The remote login was successful, you can now close this page.
         </v-card-text>
       </v-card>
     </v-row>
