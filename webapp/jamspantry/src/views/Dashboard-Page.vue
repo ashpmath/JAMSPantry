@@ -2,6 +2,7 @@
     <div>
         <strong>DASHBOARD</strong>
         <v-container fluid>
+        <v-spacer></v-spacer>
         Notifications & Alerts
 
         <v-alert
@@ -29,6 +30,7 @@
             The product <strong>rice</strong> was<strong> successfully added </strong>to pantry.
         </v-alert>
 
+        <v-spacer></v-spacer>
         Analytics
         
         <table class="table" id="dataTable">
