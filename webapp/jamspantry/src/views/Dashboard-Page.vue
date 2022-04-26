@@ -1,8 +1,39 @@
 <template>
-    <v-container fill-height fluid>
-        Dashboard
+    <div>
+        <strong>DASHBOARD</strong>
+        <v-container fluid>
+        <v-spacer></v-spacer>
+        Notifications & Alerts
 
-    <table class="table" id="dataTable">
+        <v-alert
+            color="red"
+            dense
+            dismissible
+            elevation="20"
+            outlined
+            prominent
+            text-color="black"
+            text
+            type="error"
+            >
+            Food Expires Soon!
+        </v-alert>
+        <v-alert
+            dense
+            dismissible
+            elevation="20"
+            outlined
+            prominent
+            text
+            type="success"
+            >
+            The product <strong>rice</strong> was<strong> successfully added </strong>to pantry.
+        </v-alert>
+
+        <v-spacer></v-spacer>
+        Analytics
+        
+        <table class="table" id="dataTable">
         <thead>
             <th>Product</th>
             <th>Quantity</th>
@@ -31,10 +62,13 @@
         </tr>
     </tbody>
     </table>
-
+ 
     <div class="chart">
         <canvas id="myChart"></canvas>
     </div>
-    </v-container>
 
+
+        </v-container>
+    </div>
 </template>
+
