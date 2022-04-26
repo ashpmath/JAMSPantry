@@ -53,7 +53,8 @@
 
         <v-spacer></v-spacer>
         Notifications & Alerts
-
+        <v-spacer></v-spacer>
+        
         <v-alert
             color="red"
             dense
