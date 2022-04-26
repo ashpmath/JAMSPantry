@@ -79,6 +79,7 @@
           <v-row>
             <v-btn
               color="secondary"
+              large
               @click="
                 if (verifyDate()) {
                   e1 = 3;
@@ -90,6 +91,7 @@
             </v-btn>
             <v-btn
               text
+              large
               @click="
                 e1 = 1;
                 resetForm();
@@ -220,7 +222,8 @@ export default {
     barcode: "",
     scannedItem: null,
     description: "",
-    image_url: "",
+    image_url:
+      "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png",
   }),
   mounted() {
     this.$vuetify.theme.dark = false;
@@ -266,7 +269,8 @@ export default {
       this.daySelect = null;
       this.yearSelect = null;
       this.scannedItem = null;
-      this.image_url = null;
+      this.image_url =
+        "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png";
       this.barcode = null;
     },
     decode(code) {
@@ -288,16 +292,24 @@ export default {
       xmlHttp.send(null);
       this.scannedItem = JSON.parse(xmlHttp.responseText);
 
-      // parse JSON into values
-      this.scannedItem.description = this.scannedItem.description.replace(
-        "(from barcode.monster)",
-        ""
-      );
-      this.description = this.scannedItem.description;
-      this.image_url = this.scannedItem.image_url;
+      // check if the API had the item in it's DB
+      if (this.scannedItem.status == "active") {
+        // parse JSON into values
+        this.scannedItem.description = this.scannedItem.description.replace(
+          "(from barcode.monster)",
+          ""
+        );
+        this.description = this.scannedItem.description;
+        this.image_url = this.scannedItem.image_url;
 
-      // go to Overview Page
-      this.e1 = 4;
+        // go to Overview Page
+        this.e1 = 4;
+
+      } else {  // API did not have the barcode in DB
+        this.$root.toastItem.show({ message: "Item not found, scan canceled" });
+        this.resetForm();
+        this.e1 = 1;
+      }
     },
     getDescription() {
       if (this.description != "") {
