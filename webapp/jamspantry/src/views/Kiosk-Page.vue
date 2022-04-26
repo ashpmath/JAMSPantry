@@ -225,6 +225,10 @@ export default {
 
     // store the uid got from the kiosk login page
     this.uid = this.$route.params.uid;
+    console.log(this.uid)
+    if (this.uid == undefined) {
+      this.$router.push("/kiosk-login");
+    }
   },
   methods: {
     addItem() {
