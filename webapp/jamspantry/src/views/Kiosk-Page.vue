@@ -80,8 +80,10 @@
             <v-btn
               color="secondary"
               @click="
-                e1 = 3;
-                $refs.barcode.focus();
+                if (verifyDate()) {
+                  e1 = 3;
+                  $refs.barcode.focus();
+                }
               "
             >
               Next
@@ -225,7 +227,6 @@ export default {
 
     // store the uid got from the kiosk login page
     this.uid = this.$route.params.uid;
-    console.log(this.uid)
     if (this.uid == undefined) {
       this.$router.push("/kiosk-login");
     }
@@ -313,6 +314,18 @@ export default {
 
     getExpiration() {
       return this.monthSelect + "/" + this.daySelect + "/" + this.yearSelect;
+    },
+    verifyDate() {
+      if (
+        this.daySelect != null &&
+        this.monthSelect != null &&
+        this.yearSelect != null
+      ) {
+        return true;
+      } else {
+        this.$root.toastItem.show({ message: "Pick a valid date." });
+        return false;
+      }
     },
   },
 };
