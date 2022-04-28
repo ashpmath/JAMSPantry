@@ -26,18 +26,22 @@
 
     <v-main class="ma-4"><router-view /></v-main>
     <toastItem ref="toastItem" />
+    <analytics-item ref = "analyticsItem" />
   </v-app>
 </template>
 
 <script>
 import toastItem from "./components/Toast-Item.vue";
+//import AnalyticsItem from "./components/Analytics-Item.vue";
 import { signOut, getAuth } from "firebase/auth";
+
 export default {
   components: {
-    toastItem,
+    toastItem, //AnalyticsItem
   },
   mounted() {
     this.$root.toastItem = this.$refs.toastItem;
+    //this.$root.analyticsItem = this.$refs.AnalyticsItem;
   },
   computed: {
     isSignedIn() {

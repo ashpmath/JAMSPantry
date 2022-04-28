@@ -115,7 +115,10 @@ export default {
       tab: null,
       items: ["Home", "Kiosk", "Inventory", "Analytics"],
       text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
+
     };
   },
 };
 </script>
+
+ 
