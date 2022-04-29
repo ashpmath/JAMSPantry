@@ -106,11 +106,11 @@
       </div>
 
       <div>
-        <h3>ANALYTICS</h3>
+        <h1>Analytics</h1>
         <bar-chart></bar-chart>
       </div>
       <div id="app">
-    <h1 style="padding-center:90px;">Expiration Dates</h1>
+    <h2 style="padding-center:90px;">Temperature VS. Humidity</h2>
     <GChart type="BarChart" :data="chartData" :options="chartOptions"/>    
   </div>
     </v-container>
@@ -129,17 +129,22 @@ export default {
       tab: null,
       items: ["Home", "Kiosk", "Inventory", "Analytics"],
       text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
+      
+      created() {
+      const firebase = firebase.firebase();
+      },
+
+      //firebase.Query.ref()
+
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Product", "Dates"],
-        ["Copper", 8.49],
-        ["Silver", 10.49],
-        ["Gold", 19.30],
-        ["Platinum", 21.45],
+        ["Environment", "Degrees Fahrenheit"],
+        ["Temperature", 8/3/2022],
+        ["Humidity", 5/7/2022],
       ],
       chartOptions: {
         chart: {
-          title: "Expiration Dates",          
+          title: "Temperature Vs. Humidity",          
         }
       }
     };
