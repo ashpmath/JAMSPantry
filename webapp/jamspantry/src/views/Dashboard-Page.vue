@@ -109,16 +109,16 @@
         <h3>Bar Chart Example in Vue</h3>
         <bar-chart></bar-chart>
       </div>
+      <div id="app">
+    <h1 style="padding-left:80px;">How To Implement Google Bar Chart In Vue Js - Websolutionstuff</h1>
+    <GChart type="BarChart" :data="chartData" :options="chartOptions"/>    
+  </div>
     </v-container>
   </div>
 </template>
 
 <script>
-import BarChart from "@/components/BarChart";
 export default {
-  components: {
-    BarChart,
-  },
   data() {
     return {
       tab: null,
@@ -126,5 +126,32 @@ export default {
       text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
     };
   },
+};
+</script>
+
+<script>
+import { GChart } from "vue-google-charts";
+export default {
+  name: "App",
+  components: {
+    GChart
+  },
+  data() {
+    return {
+      // Array will be automatically processed with visualization.arrayToDataTable function
+      chartData: [
+        ["Element", "Density"],
+        ["Copper", 8.49],
+        ["Silver", 10.49],
+        ["Gold", 19.30],
+        ["Platinum", 21.45],
+      ],
+      chartOptions: {
+        chart: {
+          title: "Density of Precious Metals, in g/cm^3",          
+        }
+      }
+    };
+  }
 };
 </script>
