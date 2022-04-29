@@ -106,11 +106,11 @@
       </div>
 
       <div>
-        <h3>Bar Chart Example in Vue</h3>
+        <h3>ANALYTICS</h3>
         <bar-chart></bar-chart>
       </div>
       <div id="app">
-    <h1 style="padding-left:80px;">How To Implement Google Bar Chart In Vue Js - Websolutionstuff</h1>
+    <h1 style="padding-center:90px;">Expiration Dates</h1>
     <GChart type="BarChart" :data="chartData" :options="chartOptions"/>    
   </div>
     </v-container>
@@ -148,7 +148,7 @@ export default {
       ],
       chartOptions: {
         chart: {
-          title: "Density of Precious Metals, in g/cm^3",          
+          title: "Expiration Dates",          
         }
       }
     };
