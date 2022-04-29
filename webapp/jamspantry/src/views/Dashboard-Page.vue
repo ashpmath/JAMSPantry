@@ -104,21 +104,27 @@
       <div class="chart">
         <canvas id="myChart"></canvas>
       </div>
+
+      <div>
+        <h3>Bar Chart Example in Vue</h3>
+        <bar-chart></bar-chart>
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import BarChart from "@/components/BarChart";
 export default {
+  components: {
+    BarChart,
+  },
   data() {
     return {
       tab: null,
       items: ["Home", "Kiosk", "Inventory", "Analytics"],
       text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
-
     };
   },
 };
 </script>
-
- 
