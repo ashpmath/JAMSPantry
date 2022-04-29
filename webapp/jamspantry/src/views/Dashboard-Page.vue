@@ -118,18 +118,6 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      tab: null,
-      items: ["Home", "Kiosk", "Inventory", "Analytics"],
-      text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
-    };
-  },
-};
-</script>
-
-<script>
 import { GChart } from "vue-google-charts";
 export default {
   name: "App",
@@ -138,9 +126,12 @@ export default {
   },
   data() {
     return {
+      tab: null,
+      items: ["Home", "Kiosk", "Inventory", "Analytics"],
+      text: "Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.",
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Element", "Density"],
+        ["Product", "Dates"],
         ["Copper", 8.49],
         ["Silver", 10.49],
         ["Gold", 19.30],
