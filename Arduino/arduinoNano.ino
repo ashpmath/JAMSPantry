@@ -2,7 +2,7 @@
 #include <Arduino_HTS221.h>
 #include <Arduino_LSM9DS1.h>
 #include "HX711.h"
-#include "TimeoutTimer (1).h"
+#include "TimeoutTimer.h"
 #define BUFSIZE 20
 #define calibration_factor 96650.0
 #define LOADCELL_DOUT_PIN  3
