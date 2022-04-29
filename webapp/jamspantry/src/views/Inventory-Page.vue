@@ -1,12 +1,6 @@
 <template>
-<<<<<<< HEAD
   <div>
     <v-container>
-=======
-
-    <v-container fill-height fluid>
-        Dashboard
->>>>>>> d6958d3af2ffff184ba751b75a5174fcebe56ca1
     <v-data-table
         :headers="headers"
         :items="desserts"
@@ -28,11 +22,7 @@
     </div>
     
     </v-container>
-<<<<<<< HEAD
   </div>
-=======
-    
->>>>>>> d6958d3af2ffff184ba751b75a5174fcebe56ca1
 </template>
 
 <script>
