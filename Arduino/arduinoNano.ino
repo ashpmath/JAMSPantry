@@ -2,10 +2,15 @@
 #include <Arduino_HTS221.h>
 #include <Arduino_LSM9DS1.h>
 #include "HX711.h"
-#include "TimeoutTimer.h"
+#include "TimeoutTimer (1).h"
 #define BUFSIZE 20
-#define DOUT  3
-#define CLK  2
+#define calibration_factor 96650.0
+#define LOADCELL_DOUT_PIN  3
+#define LOADCELL_SCK_PIN  2
+
+//#define calibration_factor -7050.0 //This value is obtained using the SparkFun_HX711_Calibration sketch
+// 0-5kg ( 0-11 lb)
+HX711 scale;
 
 /*   We'll use the ArduinoBLE library to simulate a basic UART connection 
  *   following this UART service specification by Nordic Semiconductors. 
@@ -21,24 +26,24 @@ BLEStringCharacteristic rxChar("6E400003-B5A3-F393-E0A9-E50E24DCCA9E", BLERead |
 BLEService essService("181A");
 BLEShortCharacteristic tempChar("2A6E", BLERead | BLENotify );
 BLEShortCharacteristic humChar("2A6F", BLERead | BLENotify );
-BLEShortCharacteristic weightChar("2A9E", BLEREAD | BLENotify ); // weight measurement scale, may need to change when testing.
+BLEShortCharacteristic weightChar("2A9E", BLERead | BLENotify ); // weight measurement scale, may need to change when testing.
 
 // Weight Sensor
-HX711 scale(DOUT, CLK);   //intialzize scale - DOUT is connected to digital pin 3 and clock is connected to pin 2 on nano
+//HX711 scale(DOUT, CLK);  // Init of library
 
 float temp = 0.0;
 float hum = 0.0;
 int interval = 100; //changed this 
 float weight = 0.0; //weight sensors
-float calibration_factor = -96650; // calibration factor
+//float totalPercentage = 0.0;
 
 void setup() 
 {
   Serial.begin(9600);
-  Serial.println("Press T to tare");    
+  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);     
   scale.set_scale(calibration_factor);  //Calibration Factor obtained from first sketch
   scale.tare();                         //Reset the scale to 0 
-  
+//  
   while(!Serial);
   if (!HTS.begin()) {
     Serial.println("Failed to initialize humidity temperature sensor!");
@@ -66,6 +71,7 @@ void setup()
   essService.addCharacteristic( tempChar );
   //BLE.addService( essService );
   essService.addCharacteristic( humChar );
+  essService.addCharacteristic( weightChar );
   BLE.addService( essService );
 
   // Start advertising our new service.
@@ -76,17 +82,17 @@ void setup()
 void loop() 
 {
 
-  Serial.print("Weight: ");
-  Serial.print(scale.get_units(), 3);  //Up to 3 decimal points
-  Serial.println(" kg");
-
-  if(Serial.available())
-  {
-    char t = Serial.read();
-    if(t == 't' || t == 'T')
-      scale.tare();  //Reset the scale to zero      
-  }
-  
+  //Serial.print("Weight: ");
+  //Serial.print(scale.get_units(), 3);  //Up to 3 decimal points
+  //Serial.println(" kg");
+//
+//  if(Serial.available())
+//    {
+//      char t = Serial.read();
+//      if(t == 't' || t == 'T')
+//       scale.tare();  //Reset the scale to zero      
+//    }
+      
   // Wait for a BLE central device.
   BLEDevice central = BLE.central();
 
@@ -136,31 +142,34 @@ void loop()
       // TODO: Get temperature from Arduino sensor (per Lab 1)
       temp = HTS.readTemperature();
       hum = HTS.readHumidity();
-      weight = scale.getWeight();
+      weight = scale.get_units();
 
-      if( weight != 0 ){
-        float fullMass = 100.0;
-        float noMass = 0.0;
-
-        totalPercentage = (weight/fullMass)*100;
-
-      }
-      else{
-        println("Error - NO MASS");
-      }
+//      if( weight != 0 ){
+//        float fullMass = 100.0;// Change weight to 0-5kg
+//        float noMass = 0.0;
+//
+//        totalPercentage = (weight/fullMass)*100;
+//
+//      }
+//      else{
+//        Serial.println("Error - NO MASS");
+//      }
       //temp = round((HTS.readTemperature())*100.0);
       
       Serial.print("Temp: ");
       Serial.println(temp);
       Serial.print("Hum: ");
-      Serial.print(hum);
-      Serial.print("Container Capacity (%): ");
-      Serial.println(totalPercentage);
+      Serial.println(hum);
+      Serial.print("Weight: ");
+      Serial.println(weight);
+      
+      //Serial.print("Container Capacity (%): ");
+      //Serial.println(totalPercentage);
 
       // Cast to desired format; multiply by 100 to keep desired precision.
       short shortTemp = (short) (temp * 100);
       short shortHum = (short) (hum * 100);
-      short shortWeight = (short) (totalPercentage * 100); 
+      short shortWeight = (short) (weight * 100); 
 
       // Send data to centeral for temperature characteristic.
       tempChar.writeValue( shortTemp );

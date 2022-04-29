@@ -102,9 +102,9 @@ export default {
 
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Environment", "Degrees Fahrenheit"],
-        ["Temperature", 8/3/2022],
-        ["Humidity", 5/7/2022],
+        ["Environment", "Firebase Values"],
+        ["Temperature", 25.03],
+        ["Humidity", 24.78],
       ],
       chartOptions: {
         chart: {
