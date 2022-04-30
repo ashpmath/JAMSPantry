@@ -32,16 +32,14 @@
 
 <script>
 import toastItem from "./components/Toast-Item.vue";
-//import AnalyticsItem from "./components/Analytics-Item.vue";
 import { signOut, getAuth } from "firebase/auth";
 
 export default {
   components: {
-    toastItem, //AnalyticsItem
+    toastItem,
   },
   mounted() {
     this.$root.toastItem = this.$refs.toastItem;
-    //this.$root.analyticsItem = this.$refs.AnalyticsItem;
   },
   computed: {
     isSignedIn() {
