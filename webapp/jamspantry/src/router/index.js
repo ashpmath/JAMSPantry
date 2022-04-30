@@ -58,6 +58,14 @@ const routes = [
       authRequired: false,
     },
   },
+  {
+    path: '/analytics-page',
+    name: 'Analytics Page',
+    component: () => import(/* webpackChunkName: "analytics-page" */ '../views/Analytics-Page.vue'),
+    meta: {
+      authRequired: false,
+    },
+  },
 ]
 
 const router = new VueRouter({

@@ -75,7 +75,7 @@
       </div>
       <div id="app">
     <h2 style="padding-center:90px;">Temperature VS. Humidity</h2>
-    <GChart type="BarChart" :data="chartData" :options="chartOptions"/>    
+    <GChart type="ColumnChart" :data="chartData" :options="chartOptions"/>    
   </div>
     </v-container>
   </div>
@@ -97,19 +97,26 @@ export default {
       created() {
       const firebase = firebase.firebase();
       },
-
-      //firebase.Query.ref()
+      // getTemperature(){
+      // firebase.database().ref('/Environment/temperature').once('value').then(function(snapshot) {
+      //     temperature = snapshot.val();
+      // }
+      // },
 
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Environment", "Firebase Values"],
-        ["Temperature", 25.03],
+        ["Environment", "Firebase Value"],
+        ["Temperature", 24.07], //getTemperature()
         ["Humidity", 24.78],
       ],
       chartOptions: {
         chart: {
-          title: "Temperature Vs. Humidity",          
+          title: "Temperature Vs. Humidity",       
+          xAxis: "Values",
+          yAxis: "Environment Variables",
+          legend: 'on'
         }
+        
       }
     };
   }
