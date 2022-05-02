@@ -32,7 +32,7 @@
       <v-spacer></v-spacer>
       <div>
         <h1>Analytics</h1>
-        <bar-chart></bar-chart>
+        <line-chart></line-chart>
       </div>
       <div id="app">
     <h2 style="padding-center:90px;">Expiration Dates</h2>
@@ -55,13 +55,15 @@ export default {
   },
   methods: {
     getTemperature(){
-    onValue(ref(db, "/" + auth.currentUser.uid + "/Environment/temperature"), (snapshot) => {
+      onValue(ref(db, "/" + auth.currentUser.uid + "/Environment/temperature"), (snapshot) => {
         console.log(snapshot.val);
     });
     },
-    // getHumidity(){
-
-    // },
+    getHumidity(){
+      onValue(ref(db, "/" + auth.currentUser.uid + "/Environment/humidity"), (snapshot) => {
+        console.log(snapshot.val);
+    });
+    },
   },
   data() {
     return {
@@ -75,8 +77,8 @@ export default {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ["Product", "Expiration Date"],
-        ["Temperature", 10], //getProductDate()
-        ["Humidity", 20],
+        ["Temperature", this.getTemperature()], //getProductDate()
+        ["Humidity", this.getHumidity()],
       ],
       chartOptions: {
         chart: {
@@ -88,9 +90,10 @@ export default {
         
       }
     };
-  } // end of data
-  // mounted(){
-
-  // }
+  }, // end of data
+  mounted(){
+    this.getTemperature();
+    this.getHumidity();
+  },
 };
 </script>

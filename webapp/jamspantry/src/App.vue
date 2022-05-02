@@ -26,7 +26,6 @@
 
     <v-main class="ma-4"><router-view /></v-main>
     <toastItem ref="toastItem" />
-    <analytics-item ref = "analyticsItem" />
   </v-app>
 </template>
 

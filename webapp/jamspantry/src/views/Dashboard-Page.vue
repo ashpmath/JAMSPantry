@@ -71,22 +71,36 @@
 
       <div>
         <h1>Smart Pantry Environment</h1>
-        <bar-chart></bar-chart>
       </div>
       <div id="app">
     <h2 style="padding-center:90px;">Temperature VS. Humidity</h2>
-    <GChart type="ColumnChart" :data="chartData" :options="chartOptions"/>    
+    <GChart type="LineChart" :data="chartData" :options="chartOptions"/>    
   </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import { db, auth} from "../firebase";
+import { ref, onValue, } from "firebase/database";
 import { GChart } from "vue-google-charts";
+
 export default {
   name: "App",
   components: {
     GChart
+  },
+  methods: {
+  getTemperature(){
+      return onValue(ref(db, auth.currentUser.uid + "/Environment/Temperature/0"), (snapshot) => {
+        return snapshot.val();
+    });
+  },
+  getHumidity(){
+    return onValue(ref(db, auth.currentUser.uid + "/Environment/Humidity/0"), (snapshot) => {
+        return snapshot.val();
+    });
+  },
   },
   data() {
     return {
@@ -97,17 +111,11 @@ export default {
       created() {
       const firebase = firebase.firebase();
       },
-      // getTemperature(){
-      // firebase.database().ref('/Environment/temperature').once('value').then(function(snapshot) {
-      //     temperature = snapshot.val();
-      // }
-      // },
-
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ["Environment", "Firebase Value"],
-        ["Temperature", 24.07], //getTemperature()
-        ["Humidity", 24.78],
+        ["Temperature", this.getTemperature()],         // this.getTemperature()
+        ["Humidity", this.getHumidity()],             //this.getHumidity()
       ],
       chartOptions: {
         chart: {
@@ -119,6 +127,12 @@ export default {
         
       }
     };
+  }, //end of data method
+  mounted() { // outside async func
+    console.log(this.getTemperature());
+    console.log(this.getHumidity());
+    this.getTemperature();
+    this.getHumidity();
   }
 };
 </script>

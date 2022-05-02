@@ -24,4 +24,3 @@ export default {
     console.log(data);
   }
 </script>
-<script src="https://docs-examples.firebaseio.com/fireblog/posts.json?callback=gotData">
