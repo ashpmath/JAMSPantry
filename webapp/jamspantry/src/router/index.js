@@ -66,6 +66,14 @@ const routes = [
       authRequired: false,
     },
   },
+  {
+    path: '/home-page',
+    name: 'Home Page',
+    component: () => import(/* webpackChunkName: "home-page" */ '../views/Home-Page.vue'),
+    meta: {
+      authRequired: false,
+    },
+  },
 ]
 
 const router = new VueRouter({

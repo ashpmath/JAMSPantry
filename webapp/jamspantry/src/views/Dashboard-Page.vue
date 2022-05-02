@@ -8,87 +8,65 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
+        <v-text-field
+            append-icon="mdi-microphone"
+            class="mx-4"
+            flat
+            hide-details
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+            solo-inverted
+        ></v-text-field>
 
         <template v-slot:extension>
-          <v-tabs v-model="tab" align-with-title>
-            <v-tabs-slider color="yellow"></v-tabs-slider>
-
-            <v-tab v-for="item in items" :key="item">
-              {{ item }}
-            </v-tab>
-          </v-tabs>
+          <v-tabs v-model="tabs" centered>
+                <v-tab>Home</v-tab>
+                <v-tab>Kiosk</v-tab>
+                <v-tab>Inventory</v-tab>
+                <v-tab>Analytics</v-tab>
+            
+                    <v-tab-item>
+                        <v-container>
+                            <home></home>
+                        </v-container>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <v-container>
+                            <kiosk></kiosk>
+                        </v-container>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <v-container>
+                            <inventory></inventory>
+                        </v-container>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <v-container>
+                            <analytics></analytics>
+                        </v-container>
+                    </v-tab-item>
+            </v-tabs>
         </template>
       </v-toolbar>
-
-      <v-tabs-items v-model="tab">
-        <v-tab-item v-for="item in items" :key="item">
-          <v-card flat>
-            <v-card-text v-text="text"></v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
     </v-card>
-
-    <v-container fluid>
-      <v-spacer></v-spacer>
-      Notifications & Alerts
-      <v-spacer></v-spacer>
-
-      <v-alert
-        color="red"
-        dense
-        dismissible
-        elevation="20"
-        outlined
-        prominent
-        text-color="black"
-        text
-        type="error"
-      >
-        Food Expires Soon!
-      </v-alert>
-      <v-alert
-        dense
-        dismissible
-        elevation="20"
-        outlined
-        prominent
-        text
-        type="success"
-      >
-        The product <strong>rice</strong> was<strong>
-          successfully added </strong
-        >to pantry.
-      </v-alert>
-      <v-spacer></v-spacer>
-
-      <div>
-        <h1>Smart Pantry Environment</h1>
-      </div>
-      <div id="app">
-    <h2 style="padding-center:90px;">Temperature VS. Humidity</h2>
-    <GChart type="LineChart" :data="chartData" :options="chartOptions"/>    
-  </div>
-    </v-container>
   </div>
 </template>
 
 <script>
 import { db, auth} from "../firebase";
 import { ref, onValue, } from "firebase/database";
-import { GChart } from "vue-google-charts";
+import Inventory from './Inventory-Page.vue'
+import Kiosk from'./Kiosk-Page.vue'
+import Analytics from './Analytics-Page.vue'
+import Home from './Home-Page.vue'
 
 export default {
   name: "App",
   components: {
-    GChart
+    Inventory,
+    Kiosk,
+    Analytics,
+    Home,
   },
   methods: {
   getTemperature(){
