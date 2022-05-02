@@ -18,3 +18,10 @@ export default {
   }
 };
 </script>
+
+<script>
+  function gotData(data) {
+    console.log(data);
+  }
+</script>
+<script src="https://docs-examples.firebaseio.com/fireblog/posts.json?callback=gotData">

@@ -43,11 +43,25 @@
 </template>
 
 <script>
+//import { getDatabase } from '@firebase/database';
+import { db, auth} from "../firebase";
+import { ref, onValue, } from "firebase/database";
 import { GChart } from "vue-google-charts";
+
 export default {
   name: "App",
   components: {
     GChart
+  },
+  methods: {
+    getTemperature(){
+    onValue(ref(db, "/" + auth.currentUser.uid + "/Environment/temperature"), (snapshot) => {
+        console.log(snapshot.val);
+    });
+    },
+    // getHumidity(){
+
+    // },
   },
   data() {
     return {
@@ -57,7 +71,7 @@ export default {
       created() {
       const firebase = firebase.firebase();
       },
-
+  
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ["Product", "Expiration Date"],
@@ -74,6 +88,9 @@ export default {
         
       }
     };
+  } // end of data
+  mounted(){
+    
   }
 };
 </script>
