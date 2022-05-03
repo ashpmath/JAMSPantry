@@ -2,23 +2,6 @@
   <div>
     <v-card>
       <v-toolbar class = "pa-2">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>Your Dashboard</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-text-field
-            append-icon="mdi-microphone"
-            class="mx-4"
-            flat
-            hide-details
-            label="Search"
-            prepend-inner-icon="mdi-magnify"
-            solo-inverted
-        ></v-text-field>
-
-        <template v-slot:extension>
           <v-tabs v-model="tabs" centered>
                 <v-tab>Home</v-tab>
                 <v-tab>Kiosk</v-tab>
@@ -46,7 +29,6 @@
                         </v-container>
                     </v-tab-item>
             </v-tabs>
-        </template>
       </v-toolbar>
     </v-card>
   </div>
@@ -114,3 +96,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.v-tab--active {
+    color: #e00736 !important;
+}
+</style>
