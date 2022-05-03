@@ -22,7 +22,7 @@
     <h1 style="padding-center:80px;">Container Capacity</h1>
     <GChart
       type="PieChart"
-      :data="chartData"
+      :data="chartData3"
       :options="chartOptions"
     />     
    </div>
@@ -148,14 +148,19 @@ export default {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Time", "Temperature", "Humidity"],
-        ["1", 20, 2], //this.getTemperature()
-        ["2", 40, 1],    //this.getHumidity()
+        ["Time", "Temperature", "Humidity", { role: 'style' }],
+        ["1", 20, 2, '#1d1e1b'], //this.getTemperature()
+        ["2", 40, 1, '#1d1e1b'],    //this.getHumidity()
       ],
       chartData2: [
         ["Time", "Temperature", "Humidity"],
         ["1", 50, 5], //this.getTemperature()
         ["2", 2, 60],    //this.getHumidity()
+      ],
+      chartData3: [
+        ["Time", "Temperature", "Humidity"],
+        ["Filled", 60, 0], //this.getTemperature()
+        ["Empty", 40, 0],    //this.getHumidity()
       ],
       chartOptions: {
         chart: {
@@ -169,6 +174,9 @@ export default {
     this.getTemperature();
     this.getHumidity();
   },
+};
+var options = {
+   colors: ['#a52714', '#0000ff', '#ff0000', '#00ff00']
 };
 </script>
 
