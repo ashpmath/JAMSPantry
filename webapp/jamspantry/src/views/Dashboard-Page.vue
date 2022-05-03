@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-toolbar color="gray" dark flat>
+      <v-toolbar class = "pa-2">
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
         <v-toolbar-title>Your Dashboard</v-toolbar-title>

@@ -1,85 +1,90 @@
 <template>
   <div>
     <v-container>
-    <v-data-table
+      <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="pgoods"
         :items-per-page="5"
         item-key="name"
         class="elevation-1"
         :footer-props="{
-            showFirstLastPage: true,
-            firstIcon: 'mdi-arrow-collapse-left',
-            lastIcon: 'mdi-arrow-collapse-right',
-            prevIcon: 'mdi-minus',
-            nextIcon: 'mdi-plus'
-    }"
-    
-    ></v-data-table>
-    
-    <div class="chart">
+          showFirstLastPage: true,
+          firstIcon: 'mdi-arrow-collapse-left',
+          lastIcon: 'mdi-arrow-collapse-right',
+          prevIcon: 'mdi-minus',
+          nextIcon: 'mdi-plus',
+        }"
+        :search="search"
+        :custom-filter="filterOnlyCapsText"
+      >
+      <template v-slot:top>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+      </v-data-table>
+
+      <div class="chart">
         <canvas id="myChart"></canvas>
-    </div>
-    
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Pantry Good',
-            align: 'start',
-            value: 'name',
-          },
-          { text: 'Expiration Date', value: 'category' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            category: '4/22/23',
-          },
-          {
-            name: 'Ice cream sandwich',
-            category: '4/22/23',
-          },
-          {
-            name: 'Eclair',
-            category: '4/22/23',
-          },
-          {
-            name: 'Cupcake',
-            category: '4/22/23',
-          },
-          {
-            name: 'Gingerbread',
-            category: '4/22/23',
-          },
-          {
-            name: 'Jelly bean',
-            category: '4/22/23',
-          },
-          {
-            name: 'Lollipop',
-            category: '4/22/23',
-          },
-          {
-            name: 'Honeycomb',
-            category: '4/22/23',
-          },
-          {
-            name: 'Donut',
-            category: '4/22/23',
-          },
-          {
-            name: 'KitKat',
-            category: '4/22/23',
-          },
-        ],
-      }
+import { auth, db } from "../firebase";
+import { ref, query, get, orderByChild } from "firebase/database";
+
+export default {
+  data() {
+    return {
+      search:'',
+      headers: [
+        {
+          text: "Pantry Good",
+          align: "start",
+          value: "description",
+        },
+        { text: "Expiration Date", value: "expir" },
+      ],
+      pgoods: [],
+    };
+  },
+  
+  methods: {
+    getFullInventory() {
+      get(
+        query(
+          ref(db, auth.currentUser.uid + "/inventory"),
+          orderByChild("description")
+        )
+      ).then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          for (const item in snapshot.val()) {
+            this.pgoods.push({
+              description: snapshot.val()[item].description,
+              expir: snapshot.val()[item].expiration,
+            });
+          }
+        } else {
+          this.pgoods = [];
+        }
+      });
     },
-  }
+    filterOnlyCapsText (value, search) {
+        search = search.toLocaleUpperCase()
+        return value != null &&
+          search != null &&
+          typeof value === 'string' &&
+          value.toString().toLocaleUpperCase().indexOf(search) !== -1
+      },
+    },
+
+  mounted() {
+    this.getFullInventory();
+  },
+};
 </script>
