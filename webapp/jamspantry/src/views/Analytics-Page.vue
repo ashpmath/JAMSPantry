@@ -1,18 +1,32 @@
 <template>
   <div>
+    <v-container fluid>
     <v-card>
       <div id="app" style="width:70%;">
     <h1 style="padding-center:80px;">Pantry Temperature and Humidity</h1>
     <GChart
-      type="AreaChart"
-      color="green"
+      type="LineChart"
       :data="chartData"
       :options="chartOptions"
     />    
   </div>
+
+    <div id="app" style="width:70%;">
+    <h1 style="padding-center:80px;">Expiration Dates</h1>
+    <GChart
+      type="BarChart"
+      :data="chartData2"
+      :options="chartOptions"
+    />    </div>
+    <div id="app" style="width:70%;">
+    <h1 style="padding-center:80px;">Container Capacity</h1>
+    <GChart
+      type="PieChart"
+      :data="chartData"
+      :options="chartOptions"
+    />     
+   </div>
     </v-card>
-    <v-container fluid>
-      
     </v-container>
   </div>
 </template>
@@ -134,9 +148,14 @@ export default {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
-        ["Environment", "Value"],
-        ["Temperature", this.getTemperature()], //this.getTemperature()
-        ["Humidity", this.getHumidity()],    //this.getHumidity()
+        ["Time", "Temperature", "Humidity"],
+        ["1", 20, 2], //this.getTemperature()
+        ["2", 40, 1],    //this.getHumidity()
+      ],
+      chartData2: [
+        ["Time", "Temperature", "Humidity"],
+        ["1", 50, 5], //this.getTemperature()
+        ["2", 2, 60],    //this.getHumidity()
       ],
       chartOptions: {
         chart: {
