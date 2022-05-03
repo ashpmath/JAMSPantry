@@ -74,6 +74,14 @@ const routes = [
       authRequired: false,
     },
   },
+  {
+    path: '/graph-page',
+    name: 'Graph Page',
+    component: () => import(/* webpackChunkName: "graph-page" */ '../views/Graph-Page.vue'),
+    meta: {
+      authRequired: false,
+    },
+  },
 ]
 
 const router = new VueRouter({

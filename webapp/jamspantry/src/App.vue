@@ -35,7 +35,7 @@ import { signOut, getAuth } from "firebase/auth";
 
 export default {
   components: {
-    toastItem,
+    toastItem, 
   },
   mounted() {
     this.$root.toastItem = this.$refs.toastItem;
@@ -66,6 +66,7 @@ export default {
       }
     }
   },
+   template: "<Graph-Page.vue/>"
 };
 </script>
 
