@@ -1,33 +1,37 @@
 <template>
   <div>
-    <v-container fluid>
+   <!-- <v-container fluid> --->
     <v-card>
-      <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Pantry Temperature and Humidity</h1>
+      <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Pantry Temperature and Humidity</h2>
     <GChart
-      type="LineChart"
+      type="AreaChart"
       :data="chartData"
       :options="chartOptions"
+      xAxis="Time"
+      yAxis="Environment Variables"
     />    
   </div>
 
-    <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Expiration Dates</h1>
+    <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Expiration Dates</h2>
     <GChart
-      type="BarChart"
+      type="ColumnChart"
       :data="chartData2"
       :options="chartOptions"
+  
     />    </div>
-    <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Container Capacity</h1>
+    <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Container Capacity</h2>
     <GChart
       type="PieChart"
       :data="chartData3"
       :options="chartOptions"
+      :colors="chartOptions"
     />     
    </div>
     </v-card>
-    </v-container>
+   <!--- </v-container> -->
   </div>
 </template>
 
@@ -149,18 +153,20 @@ export default {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ["Time", "Temperature", "Humidity", { role: 'style' }],
-        ["1", 20, 2, '#1d1e1b'], //this.getTemperature()
-        ["2", 40, 1, '#1d1e1b'],    //this.getHumidity()
+        ["1", 20, 40, '#662200'], 
+        ["2", 30,25, '#006644'],    
       ],
       chartData2: [
-        ["Time", "Temperature", "Humidity"],
-        ["1", 50, 5], //this.getTemperature()
-        ["2", 2, 60],    //this.getHumidity()
+        ["Expiration Dates", "Products", { role: 'style' }],
+        ["0-1", 8,'#006644'], //this.getTemperature()
+        ["1-3", 3, '#006644'],    //this.getHumidity()
+        ["3-5", 4, '#006644'],    //this.getHumidity()
+        ["6+", 10, '#006644'],    //this.getHumidity()
       ],
       chartData3: [
-        ["Time", "Temperature", "Humidity"],
-        ["Filled", 60, 0], //this.getTemperature()
-        ["Empty", 40, 0],    //this.getHumidity()
+        ["Status", "Percentage", "NULL",{ role: 'style' } ],
+        ["Filled", 60, 0, '#b82606'], //this.getTemperature()
+        ["Empty", 40, 0, '#3b2606'],    //this.getHumidity()
       ],
       chartOptions: {
         chart: {
@@ -174,9 +180,6 @@ export default {
     this.getTemperature();
     this.getHumidity();
   },
-};
-var options = {
-   colors: ['#a52714', '#0000ff', '#ff0000', '#00ff00']
 };
 </script>
 
