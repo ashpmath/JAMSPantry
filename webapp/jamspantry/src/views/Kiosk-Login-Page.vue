@@ -50,13 +50,13 @@ export default {
     // device and wrote their user id
     onValue(ref(db, "/keys", this.key), (snapshot) => {
       const uid = snapshot.val()[this.key];
-      if (uid != "pending") {
+      if (uid != "pending" && uid != undefined) {
         // delete the key from database
         remove(ref(db, "keys/" + this.key));
 
-        // route to the kiosk page and pass it the uid to use to 
+        // route to the kiosk page and pass it the uid to use to
         // push inventory to the database
-        this.$router.push({ name: "Kiosk", params: {"uid":uid} });
+        this.$router.push({ name: "Kiosk", params: { uid: uid } }).catch();
       }
     });
   },

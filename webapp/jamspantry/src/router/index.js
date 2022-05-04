@@ -102,6 +102,11 @@ router.beforeEach((to, from, next) => {
       }
     })
   }
+  else if (to.path == '/kiosk' && Object.keys(to.params).length == 0) {
+    next({
+      path: '/kiosk-login',
+    })
+  }
   else {
     next()
   }
