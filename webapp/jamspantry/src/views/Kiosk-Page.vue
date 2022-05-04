@@ -334,12 +334,16 @@ export default {
 
           this.e1 = 3; // go to select expiration date for scanning item in
         } else {
-          // API did not have the barcode in DB
-          this.$root.toastItem.show({
-            message: "Item not found, scan canceled",
-          });
-          this.resetForm();
-          this.e1 = 1;
+          // API did not have the barcode in DB so generate an empty json
+          this.scannedItem["class"] = "UPCA";
+          this.scannedItem["code"] = code;
+          this.scannedItem["company"] = "";
+          this.scannedItem["description"] = "Description not available.";
+          this.description = "Description not available.";
+          this.scannedItem["image_url"] = "";
+          this.scannedItem["size"] = "";
+          this.scannedItem["status"] = "";
+          this.e1 = 3; // go to select expiration date for scanning item in
         }
       }
       // scanning out so check for duplicates to determine if experiation date picker is needed
