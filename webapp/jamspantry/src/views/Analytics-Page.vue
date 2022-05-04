@@ -1,25 +1,28 @@
 <template>
   <div>
-    <v-container fluid>
+   <!-- <v-container fluid> --->
     <v-card>
-      <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Pantry Temperature and Humidity</h1>
+      <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Pantry Temperature and Humidity</h2>
     <GChart
       type="AreaChart"
       :data="chartData"
       :options="chartOptions"
+      xAxis="Time"
+      yAxis="Environment Variables"
     />    
   </div>
 
-    <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Expiration Dates</h1>
+    <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Expiration Dates</h2>
     <GChart
       type="ColumnChart"
       :data="chartData2"
       :options="chartOptions"
+  
     />    </div>
-    <div id="app" style="width:70%;">
-    <h1 style="padding-center:80px;">Container Capacity</h1>
+    <div id="app" style="width:60%;">
+    <h2 style="padding-center:50px;">Container Capacity</h2>
     <GChart
       type="PieChart"
       :data="chartData3"
@@ -28,7 +31,7 @@
     />     
    </div>
     </v-card>
-    </v-container>
+   <!--- </v-container> -->
   </div>
 </template>
 
