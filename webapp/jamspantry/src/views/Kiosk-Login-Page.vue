@@ -54,9 +54,9 @@ export default {
         // delete the key from database
         remove(ref(db, "keys/" + this.key));
 
-        // route to the kiosk page and pass it the uid to use to 
+        // route to the kiosk page and pass it the uid to use to
         // push inventory to the database
-        this.$router.push({ name: "Kiosk", params: {"uid":uid} });
+        this.$router.push({ name: "Kiosk", params: { uid: uid } }).catch();
       }
     });
   },
