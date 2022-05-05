@@ -2,6 +2,7 @@
   <div>
     <v-container fluid>
       <v-card>
+        <!-- <graph :data="datag" title="the chart title"></graph> -->
         <div class="scroll">
           <div id="app" style="width: 60%">
             <h2 style="padding-center: 50px">
@@ -10,10 +11,11 @@
             <GChart
               type="AreaChart"
               :data="chartData"
-              :options="chartOptions"
-              xAxis="Time"
-              yAxis="Environment Variables"
+              :options="chartOptions()"
             />
+            <h4 style="center: 60px">
+              Time Within The Past 6 hours
+            </h4>
           </div>
           <div id="app" style="width: 60%">
             <h2 style="padding-center: 50px">Container Capacity</h2>
@@ -21,7 +23,7 @@
               :settings="{ packages: ['corechart', 'gauge'] }"
               type="Gauge"
               :data="weightData"
-              :options="weightOptions"
+              :options="weightOption()"
             />
           </div>
           <div id="app" style="width: 50%">
@@ -29,7 +31,7 @@
             <GChart
               type="ColumnChart"
               :data="chartData"
-              :options="chartOptions"
+              :options="chartOptions2()"
               xAxis="Monthly Timeline"
               yAxis="Product Quantity"
             />
@@ -63,15 +65,30 @@ export default {
   data() {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
+      
       chartData: null,
       weightData: null,
-      chartOptions: {
-        chart: {
+      chartOptions(){
+        return{
           title: "Temperature and Humidity",
-          subtitle: "By Hour",
-        },
+          xAxis: "By Hour",
+          yAxis: "Values",
+          titleY: "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
+          titleX: "Historic Time - Last 6 Hours",
+          height: 500,
+        }
       },
-      weightOptions: {
+      chartOptions2() {
+        return{
+          title: "Expiration Dates",
+          height: 500,
+          titleX: "Products Expiring (Monthy Basis)",
+          titleY: "Item Quantity"
+        }
+      },
+      weightOption() {
+        return{
+        title: "Hello",
         width: 400,
         height: 120,
         redFrom: 0,
@@ -79,6 +96,7 @@ export default {
         yellowFrom: 10,
         yellowTo: 25,
         minorTicks: 2,
+        }
       },
     };
   },
