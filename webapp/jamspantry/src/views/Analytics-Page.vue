@@ -13,9 +13,6 @@
               :data="chartData"
               :options="chartOptions()"
             />
-            <h4 style="center: 60px">
-              Time Within The Past 6 hours
-            </h4>
           </div>
           <div id="app" style="width: 60%">
             <h2 style="padding-center: 50px">Container Capacity</h2>
@@ -23,7 +20,7 @@
               :settings="{ packages: ['corechart', 'gauge'] }"
               type="Gauge"
               :data="weightData"
-              :options="weightOption()"
+              :options="weightOptions()"
             />
           </div>
           <div id="app" style="width: 50%">
@@ -41,9 +38,7 @@
             <GChart
               type="PieChart"
               :data="chartData"
-              :options="chartOptions"
-              xAxis="Monthly Timeline"
-              yAxis="Product Quantity"
+              :options="chartOptions3()"
             />
           </div>
         </div>
@@ -82,13 +77,13 @@ export default {
         return{
           title: "Expiration Dates",
           height: 500,
-          titleX: "Products Expiring (Monthy Basis)",
+          titleX: "Monthly Timeline for Product Expiration",
           titleY: "Item Quantity"
         }
       },
-      weightOption() {
+      weightOptions() {
         return{
-        title: "Hello",
+        title: "Relative Mass of Container (%)",
         width: 400,
         height: 120,
         redFrom: 0,
@@ -96,6 +91,13 @@ export default {
         yellowFrom: 10,
         yellowTo: 25,
         minorTicks: 2,
+        }
+      },
+      chartOptions3() {
+        return{
+          title: "Total Items in Pantry",
+          height: 500,
+          titleX: "Quantity",
         }
       },
     };
