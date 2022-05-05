@@ -72,18 +72,15 @@ export default {
         },
       },
       weightOptions: {
-        width: 400,
-        height: 120,
         redFrom: 0,
         redTo: 10,
-        yellowFrom: 10,
-        yellowTo: 25,
-        minorTicks: 2,
+        minorTicks: 5,
+        redColor: "#941B35",
       },
     };
   },
   methods: {
-    getData(snapshot) {
+    getEnvironmentData(snapshot) {
       // get temp and humidity data for area chart
       let temperatures = snapshot.Temperature;
       let humidities = snapshot.Humidity;
@@ -91,37 +88,25 @@ export default {
       this.chartData = [["Time", "Temperature", "Humidity"]];
       for (let i = 0; i < len; i++) {
         this.chartData.push([
-          len - i,
+          (len - i)/60,
           parseFloat(temperatures[i]),
           parseFloat(humidities[i]),
         ]);
       }
       // get weight for the guage ***in prog
-      this.weightData = [
-        ["Label", "Value"],
-        ["QTY %", parseFloat(snapshot.Weight)],
-      ];
-    },
-    scrollHanle(evt) {
-      console.log(evt);
+      let weight = parseFloat(snapshot.Weight);
+      if (weight != -1) {
+        this.weightData = [["Label", "Value"], ["QTY %", weight]];
+      }
+      else {
+        this.weightData = [["Label", "Value"], ["QTY %", weight]];
+      }
     },
   },
   mounted() {
     onValue(ref(db, auth.currentUser.uid + "/Environment"), (snapshot) => {
-      this.getData(snapshot.val());
+      this.getEnvironmentData(snapshot.val());
     });
   },
 };
 </script>
-
- <style>
-div.scroll {
-  background-color: #ffffff00;
-  width: 1737px;
-  height: 650px;
-  overflow-x: scroll;
-  overflow-y: scroll;
-  text-align: left;
-  padding: 20px;
-}
-</style>
