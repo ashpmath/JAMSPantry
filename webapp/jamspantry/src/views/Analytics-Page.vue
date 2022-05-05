@@ -84,13 +84,10 @@ export default {
       weightOptions() {
         return{
         title: "Relative Mass of Container (%)",
-        width: 400,
-        height: 120,
         redFrom: 0,
         redTo: 10,
-        yellowFrom: 10,
-        yellowTo: 25,
-        minorTicks: 2,
+        redColor: "941B35",
+        minorTicks: 5,
         }
       },
       chartOptions3() {

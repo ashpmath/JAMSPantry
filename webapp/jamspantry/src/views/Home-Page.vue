@@ -261,6 +261,8 @@ export default {
   },
 
   mounted() {
+    document.getElementById("warning").style.visibility = "hidden";
+    document.getElementById("weigh").style.visibility = "hidden";
     onValue(ref(db, auth.currentUser.uid + "/Environment"), () => {
       this.getTempHum();
     });
