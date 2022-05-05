@@ -16,7 +16,7 @@
         </div>
         <spacer></spacer>
         <div id="app" style="width: 60%">
-          <h2 style="padding-center: 50px">Pantry Temperature and Humidity</h2>
+          <h2 style="padding-center: 50px">Container Capacity</h2>
           <GChart
             :settings="{ packages: ['corechart', 'gauge'] }"
             type="Gauge"
