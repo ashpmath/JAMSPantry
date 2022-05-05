@@ -127,7 +127,6 @@ export default {
       chartOptions3() {
         return{
           title: "Total Items in Pantry",
-          minorTicks: 2,
           titleX: "Quantity",
           height: 500,
           titleTextStyle: {
@@ -161,6 +160,15 @@ export default {
       else {
         this.weightData = [["Label", "Value"], ["QTY %", weight]];
       }
+      // // Total Items in Pantry
+      // let weight = parseFloat(snapshot.Weight);
+      // if (weight != -1) {
+      //   this.Data = [["Label", "Value"], ["QTY %", weight]];
+      // }
+      // else {
+      //   this.object.keys.length = 
+      // }
+      
     },
   },
   mounted() {
