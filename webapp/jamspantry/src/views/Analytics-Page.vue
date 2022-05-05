@@ -3,6 +3,7 @@
     <v-container fluid>
       <v-card>
         <div class="scroll">
+          <spacer></spacer>
         <div id="app" style="width: 60%">
           <h2 style="padding-center: 50px">Pantry Temperature and Humidity</h2>
           <GChart
@@ -13,6 +14,7 @@
             yAxis="Environment Variables"
           />
         </div>
+        <spacer></spacer>
         <div id="app" style="width: 60%">
           <h2 style="padding-center: 50px">Pantry Temperature and Humidity</h2>
           <GChart
@@ -22,6 +24,7 @@
             :options="weightOptions"
           />
         </div>
+        <spacer></spacer>
         <div id="app" style="width: 50%">
           <h2 style="padding-center: 50px">Expiration Dates</h2>
           <GChart
@@ -32,6 +35,7 @@
             yAxis="Product Quantity"
           />
         </div>
+        <spacer></spacer>
         <div id="app" style="width: 50%">
           <h2 style="padding-center: 50px">Total Pantry Capacity</h2>
           <GChart
@@ -133,11 +137,11 @@ export default {
  <style>
       div.scroll {
         background-color: #ffffff00;
-        width: 1140px;
+        width: 1737px;
         height: 650px;
-        overflow-x: auto;
-        overflow-y: auto;
-        text-align: center;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        text-align: left;
         padding: 20px;
       }
     </style>
