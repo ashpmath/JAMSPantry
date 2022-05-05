@@ -82,7 +82,7 @@ export default {
         if (snapshot.exists()) {
             const year = new Date().getFullYear()
             const month = new Date().getMonth()+1
-            const day = new Date().getDay()
+            const day = new Date().getDay()+1
             console.log(snapshot.val());
             // expiration for loop
             for (const itemKey in snapshot.val()) {
@@ -112,7 +112,7 @@ export default {
             }
             const check = new Date()
             check.setDate(check.getDate()+7)
-            const dayCheck = check.getDate()
+            const dayCheck = check.getDate()+1
             const monthCheck = check.getMonth()+1
             const yearCheck = check.getFullYear()
             //warning loop
