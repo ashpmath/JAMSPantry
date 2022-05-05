@@ -76,28 +76,28 @@ export default {
       chartOptions2() {
         return{
           title: "Expiration Dates",
-          height: 500,
           titleX: "Monthly Timeline for Product Expiration",
-          titleY: "Item Quantity"
+          titleY: "Item Quantity",
+          height: 500,
         }
       },
       weightOptions() {
         return{
-        title: "Relative Mass of Container (%)",
-        width: 400,
-        height: 120,
-        redFrom: 0,
-        redTo: 10,
-        yellowFrom: 10,
-        yellowTo: 25,
-        minorTicks: 2,
+          title: "Relative Mass of Container (%)",
+          width: 400,
+          height: 120,
+          redFrom: 0,
+          redTo: 10,
+          yellowFrom: 10,
+          yellowTo: 25,
+          minorTicks: 2,
         }
       },
       chartOptions3() {
         return{
           title: "Total Items in Pantry",
-          height: 500,
           titleX: "Quantity",
+          height: 500,
         }
       },
     };
