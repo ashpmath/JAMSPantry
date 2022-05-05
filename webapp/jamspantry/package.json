@@ -18,6 +18,7 @@
     "vue-google-charts": "^0.3.3",
     "vue-qr": "^4.0.6",
     "vue-router": "^3.5.3",
+    "vue-scrollbar-simple": "^0.0.10",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
