@@ -63,7 +63,7 @@ const routes = [
     name: 'Analytics Page',
     component: () => import(/* webpackChunkName: "analytics-page" */ '../views/Analytics-Page.vue'),
     meta: {
-      authRequired: false,
+      authRequired: true,
     },
   },
   {
@@ -71,15 +71,7 @@ const routes = [
     name: 'Home Page',
     component: () => import(/* webpackChunkName: "home-page" */ '../views/Home-Page.vue'),
     meta: {
-      authRequired: false,
-    },
-  },
-  {
-    path: '/graph',
-    name: 'Graph Page',
-    component: () => import(/* webpackChunkName: "graph-page" */ '../views/Graph-Page.vue'),
-    meta: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 ]
