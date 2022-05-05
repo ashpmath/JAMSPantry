@@ -2,6 +2,7 @@
   <div>
     <v-container fluid>
       <v-card>
+        <!-- <graph :data="datag" title="the chart title"></graph> -->
         <div class="scroll">
           <div id="app" style="width: 60%">
             <h2 style="padding-center: 50px">
@@ -10,9 +11,7 @@
             <GChart
               type="AreaChart"
               :data="chartData"
-              :options="chartOptions"
-              xAxis="Time"
-              yAxis="Environment Variables"
+              :options="chartOptions()"
             />
           </div>
           <div id="app" style="width: 60%">
@@ -21,7 +20,7 @@
               :settings="{ packages: ['corechart', 'gauge'] }"
               type="Gauge"
               :data="weightData"
-              :options="weightOptions"
+              :options="weightOptions()"
             />
           </div>
           <div id="app" style="width: 50%">
@@ -29,7 +28,7 @@
             <GChart
               type="ColumnChart"
               :data="chartData"
-              :options="chartOptions"
+              :options="chartOptions2()"
               xAxis="Monthly Timeline"
               yAxis="Product Quantity"
             />
@@ -39,9 +38,7 @@
             <GChart
               type="PieChart"
               :data="chartData"
-              :options="chartOptions"
-              xAxis="Monthly Timeline"
-              yAxis="Product Quantity"
+              :options="chartOptions3()"
             />
           </div>
         </div>
@@ -63,19 +60,45 @@ export default {
   data() {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
+      
       chartData: null,
       weightData: null,
-      chartOptions: {
-        chart: {
+      chartOptions(){
+        return{
           title: "Temperature and Humidity",
-          subtitle: "By Hour",
-        },
+          xAxis: "By Hour",
+          yAxis: "Values",
+          titleY: "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
+          titleX: "Historic Time - Last 6 Hours",
+          height: 500,
+        }
       },
-      weightOptions: {
+      chartOptions2() {
+        return{
+          title: "Expiration Dates",
+          height: 500,
+          titleX: "Monthly Timeline for Product Expiration",
+          titleY: "Item Quantity"
+        }
+      },
+      weightOptions() {
+        return{
+        title: "Relative Mass of Container (%)",
+        width: 400,
+        height: 120,
         redFrom: 0,
         redTo: 10,
-        minorTicks: 5,
-        redColor: "#941B35",
+        yellowFrom: 10,
+        yellowTo: 25,
+        minorTicks: 2,
+        }
+      },
+      chartOptions3() {
+        return{
+          title: "Total Items in Pantry",
+          height: 500,
+          titleX: "Quantity",
+        }
       },
     };
   },
