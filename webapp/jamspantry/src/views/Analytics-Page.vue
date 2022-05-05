@@ -40,11 +40,7 @@ export default {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: null,
-      weight: null,
-      weightData: [
-        ["Label", "Value"],
-        ["QTY %", 0],
-      ],
+      weightData: null,
       chartOptions: {
         chart: {
           title: "Temperature and Humidity",
@@ -84,7 +80,10 @@ export default {
         }
 
         // get weight for the guage ***in prog
-        this.weight = snapshot.val().Weight;
+        this.weightData = [
+        ["Label", "Value"],
+        ["QTY %", parseFloat(snapshot.val().Weight)],
+      ];
       });
     },
   },
