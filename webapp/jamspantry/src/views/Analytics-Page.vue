@@ -5,9 +5,6 @@
         <!-- <graph :data="datag" title="the chart title"></graph> -->
         <div class="scroll">
           <div id="app" style="width: 60%">
-            <h2 style="padding-center: 50px">
-              Pantry Temperature and Humidity
-            </h2>
             <GChart
               type="AreaChart"
               :data="chartData"
@@ -24,7 +21,6 @@
             />
           </div>
           <div id="app" style="width: 50%">
-            <h2 style="padding-center: 50px">Expiration Dates</h2>
             <GChart
               type="ColumnChart"
               :data="chartData"
@@ -65,20 +61,50 @@ export default {
       weightData: null,
       chartOptions(){
         return{
-          title: "Temperature and Humidity",
+          title: "Pantry Temperature and Humidity",
           xAxis: "By Hour",
           yAxis: "Values",
           titleY: "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
           titleX: "Historic Time - Last 6 Hours",
           height: 500,
+          titleTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
+          titleYTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
+          titleXTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
         }
       },
       chartOptions2() {
         return{
-          title: "Expiration Dates",
-          height: 500,
+          title: "Product Expiration Dates",
           titleX: "Monthly Timeline for Product Expiration",
-          titleY: "Item Quantity"
+          titleY: "Item Quantity",
+          height: 500,
+          titleTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
+          titleYTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
+          titleXTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
         }
       },
       weightOptions() {
@@ -93,8 +119,13 @@ export default {
       chartOptions3() {
         return{
           title: "Total Items in Pantry",
-          height: 500,
           titleX: "Quantity",
+          height: 500,
+          titleTextStyle: {
+            color: '333333',
+            fontName: 'Arial',
+            fontSize: 30,
+          },
         }
       },
     };
@@ -121,6 +152,15 @@ export default {
       else {
         this.weightData = [["Label", "Value"], ["QTY %", weight]];
       }
+      // // Total Items in Pantry
+      // let weight = parseFloat(snapshot.Weight);
+      // if (weight != -1) {
+      //   this.Data = [["Label", "Value"], ["QTY %", weight]];
+      // }
+      // else {
+      //   this.object.keys.length = 
+      // }
+      
     },
   },
   mounted() {
