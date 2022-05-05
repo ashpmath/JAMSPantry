@@ -23,8 +23,8 @@
           <div id="app" style="width: 50%">
             <GChart
               type="ColumnChart"
-              :data="chartData"
-              :options="chartOptions2()"
+              :data="expirData"
+              :options="expirOptions()"
               xAxis="Monthly Timeline"
               yAxis="Product Quantity"
             />
@@ -56,77 +56,79 @@ export default {
   data() {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
-      
+
       chartData: null,
       weightData: null,
-      chartOptions(){
-        return{
+      expirData: null,
+      chartOptions() {
+        return {
           title: "Pantry Temperature and Humidity",
           xAxis: "By Hour",
           yAxis: "Values",
-          titleY: "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
+          titleY:
+            "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
           titleX: "Historic Time - Last 6 Hours",
           height: 500,
           titleTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
           titleYTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
           titleXTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
-        }
+        };
       },
-      chartOptions2() {
-        return{
+      expirOptions() {
+        return {
           title: "Product Expiration Dates",
           titleX: "Monthly Timeline for Product Expiration",
           titleY: "Item Quantity",
           height: 500,
           titleTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
           titleYTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
           titleXTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
-        }
+        };
       },
       weightOptions() {
-        return{
-        title: "Relative Mass of Container (%)",
-        redFrom: 0,
-        redTo: 10,
-        redColor: "941B35",
-        minorTicks: 5,
-        }
+        return {
+          title: "Relative Mass of Container (%)",
+          redFrom: 0,
+          redTo: 10,
+          redColor: "941B35",
+          minorTicks: 5,
+        };
       },
       chartOptions3() {
-        return{
+        return {
           title: "Total Items in Pantry",
           titleX: "Quantity",
           height: 500,
           titleTextStyle: {
-            color: '333333',
-            fontName: 'Arial',
+            color: "333333",
+            fontName: "Arial",
             fontSize: 30,
           },
-        }
+        };
       },
     };
   },
@@ -139,7 +141,7 @@ export default {
       this.chartData = [["Time", "Temperature", "Humidity"]];
       for (let i = 0; i < len; i++) {
         this.chartData.push([
-          (len - i)/60,
+          (len - i) / 60,
           parseFloat(temperatures[i]),
           parseFloat(humidities[i]),
         ]);
@@ -147,10 +149,15 @@ export default {
       // get weight for the guage ***in prog
       let weight = parseFloat(snapshot.Weight);
       if (weight != -1) {
-        this.weightData = [["Label", "Value"], ["QTY %", weight]];
-      }
-      else {
-        this.weightData = [["Label", "Value"], ["QTY %", weight]];
+        this.weightData = [
+          ["Label", "Value"],
+          ["QTY %", weight],
+        ];
+      } else {
+        this.weightData = [
+          ["Label", "Value"],
+          ["QTY %", weight],
+        ];
       }
       // // Total Items in Pantry
       // let weight = parseFloat(snapshot.Weight);
@@ -158,14 +165,49 @@ export default {
       //   this.Data = [["Label", "Value"], ["QTY %", weight]];
       // }
       // else {
-      //   this.object.keys.length = 
+      //   this.object.keys.length =
       // }
-      
+    },
+    getExpirData(snapshot) {
+      this.expirData = [
+        ["Time Frame", "Count"],
+        ["Expired", 0],
+        ["1-2", 0],
+        ["3-6", 0],
+        ["6+", 0],
+      ];
+      for (var itemKey in snapshot) {
+        let itemDate = new Date(snapshot[itemKey].expiration);
+
+        // expired
+        let curDate = new Date();
+        if (itemDate < curDate) {
+          this.expirData[1][1] = this.expirData[1][1] + 1;
+        } else {
+          // 1-2
+          curDate.setMonth(curDate.getMonth() + 2);
+          if (itemDate < curDate) {
+            this.expirData[2][1] = this.expirData[2][1] + 1;
+          } else {
+            // 3-6
+            curDate.setMonth(curDate.getMonth() + 6);
+            if (itemDate < curDate) {
+              this.expirData[3][1] = this.expirData[3][1] + 1;
+            } else {
+              // 6+
+              this.expirData[4][1] = this.expirData[4][1] + 1;
+            }
+          }
+        }
+      }
     },
   },
   mounted() {
     onValue(ref(db, auth.currentUser.uid + "/Environment"), (snapshot) => {
       this.getEnvironmentData(snapshot.val());
+    });
+    onValue(ref(db, auth.currentUser.uid + "/inventory"), (snapshot) => {
+      this.getExpirData(snapshot.val());
     });
   },
 };
