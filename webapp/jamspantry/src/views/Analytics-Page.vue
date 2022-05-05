@@ -30,7 +30,7 @@
             />
           </div>
           <div id="app" style="width: 50%">
-            <h2 style="padding-center: 50px">Total Pantry Capacity</h2>
+            <h2 style="padding-center: 50px">Total Count (# of items)</h2>
             <GChart
               type="PieChart"
               :data="chartData"
@@ -168,7 +168,7 @@ export default {
       // else {
       //   this.object.keys.length = 
       // }
-      
+
     },
   },
   mounted() {
