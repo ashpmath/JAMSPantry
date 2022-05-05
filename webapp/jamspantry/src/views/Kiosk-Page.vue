@@ -173,7 +173,7 @@
               :value="getDescription()"
             ></v-textarea>
           </v-row>
-          <v-row>
+          <v-row class="ma-1">
             <v-btn
               color="secondary"
               @click="
