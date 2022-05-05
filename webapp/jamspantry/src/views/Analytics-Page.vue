@@ -120,8 +120,18 @@ export default {
         // get weight for the guage ***in prog
         this.weight = snapshot.val().Weight;
 
-        // get expiration dates for column chart in prog
-        this.expirationDate = snapshot.val().Expiration;
+        //my work
+        // let weight = snapshot.val().Weight;
+        // this.chartData = [["Time", "Temperature", "Humidity"]];
+        // for (let j = 0; j < len; j++){
+        //   this.chartData2.push([
+        //     len - j, 
+        //     parseFloat(weight[j]),
+        //   ]);
+        // }
+        // //expiration data stuff
+        // this.expirationDate = snapshot.val().expiration;
+
       });
     },
     scrollHanle(evt) {
