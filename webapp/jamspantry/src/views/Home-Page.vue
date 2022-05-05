@@ -3,7 +3,7 @@
         <v-container fluid>
             Welcome to JAMSPantry home page! Here you will find everything you need to know about your pantrys inventory to product information, expiration dates, and analytics.
             <v-spacer></v-spacer>
-            Notifications & Alerts
+                <h2 style="padding-center: 100px">Expired Food</h2>
             <v-spacer></v-spacer>
 
             <v-alert
@@ -14,7 +14,7 @@
                 prominent
                 text-color="black"
                 text
-                type="error"
+                type="warning"
             >
             <v-data-table
             hide-default-header
@@ -26,6 +26,7 @@
             class="elevation-1">
             </v-data-table>  
             </v-alert>
+                <h2 style="padding-center: 100px">Food Expiring within 1 Week</h2>
             <v-alert
                 color="yellow"
                 dense
