@@ -25,10 +25,6 @@
         ></v-text-field>
       </template>
       </v-data-table>
-
-      <div class="chart">
-        <canvas id="myChart"></canvas>
-      </div>
     </v-container>
   </div>
 </template>
