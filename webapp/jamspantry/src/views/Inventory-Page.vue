@@ -62,7 +62,6 @@ export default {
         )
       ).then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
           for (const item in snapshot.val()) {
             this.pgoods.push({
               description: snapshot.val()[item].description,
