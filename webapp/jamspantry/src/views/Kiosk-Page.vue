@@ -509,4 +509,9 @@ export default {
 .otpScaler {
   zoom: 0.82;
 }
+/* css to hide scrollbar and cursor for firefox */
+.body {
+  scrollbar-width: none;
+  cursor: none;
+}
 </style>

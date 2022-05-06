@@ -82,4 +82,8 @@ export default {
 ::-webkit-scrollbar {
   display: none;
 }
+.body {
+  scrollbar-width: none;
+  cursor: none;
+}
 </style>
