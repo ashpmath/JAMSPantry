@@ -69,7 +69,7 @@ export default {
           yAxis: "Values",
           height: 300,
           titleY:
-            "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
+            "Humidity (%) and Temperature (Degrees Celsius)",
           titleX: "Historic Time - Last 6 Hours",
           titleTextStyle: {
             color: "333333",
