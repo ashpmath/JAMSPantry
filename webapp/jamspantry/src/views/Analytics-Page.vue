@@ -1,26 +1,36 @@
 <template>
   <div>
-    <v-container fluid>
-      <v-card>
-        <!-- <graph :data="datag" title="the chart title"></graph> -->
-        <div class="scroll">
-          <div id="app" style="width: 60%">
+      <v-container>
+        <!-- Container QTY and pantry count -->
+        <v-row>
+          <v-col align="center">
+            <h2>Container Capacity</h2>
             <GChart
-              type="AreaChart"
-              :data="chartData"
-              :options="chartOptions()"
-            />
-          </div>
-          <div id="app" style="width: 60%">
-            <h2 style="padding-center: 50px">Container Capacity</h2>
-            <GChart
+              :style="graphStyle"
               :settings="{ packages: ['corechart', 'gauge'] }"
               type="Gauge"
               :data="weightData"
               :options="weightOptions()"
             />
+          </v-col>
+          <v-col align="center">
+            <h2 style="padding-center: 50px">Total Items</h2>
+            <h1 style="font-size: 80px">{{totalItem}}</h1>
+          </v-col>
+        </v-row>
+        <!-- Temp/Humidity -->
+        <v-row  :style="graphStyle">
+          <div style="width: 100%">
+            <GChart
+              type="AreaChart"
+              :data="chartData"
+              :options="tempHumOptions()"
+            />
           </div>
-          <div id="app" style="width: 50%">
+        </v-row>
+        <!-- Expiration Dates -->
+        <v-row class="pa-1" :style="graphStyle">
+          <div style="width: 100%">
             <GChart
               type="ColumnChart"
               :data="expirData"
@@ -29,17 +39,8 @@
               yAxis="Product Quantity"
             />
           </div>
-          <div id="app" style="width: 50%">
-            <h2 style="padding-center: 50px">Total Count (# of items)</h2>
-            <GChart
-              type="PieChart"
-              :data="chartData"
-              :options="chartOptions3()"
-            />
-          </div>
-        </div>
-      </v-card>
-    </v-container>
+        </v-row>
+      </v-container>
   </div>
 </template>
 
@@ -60,15 +61,16 @@ export default {
       chartData: null,
       weightData: null,
       expirData: null,
-      chartOptions() {
+      totalItem: null,
+      tempHumOptions() {
         return {
           title: "Pantry Temperature and Humidity",
           xAxis: "By Hour",
           yAxis: "Values",
+          height: 300,
           titleY:
             "Humidity (Grams Per Cubic Meter) and Temperature (Degrees Celsius)",
           titleX: "Historic Time - Last 6 Hours",
-          height: 500,
           titleTextStyle: {
             color: "333333",
             fontName: "Arial",
@@ -91,7 +93,7 @@ export default {
           title: "Product Expiration Dates",
           titleX: "Monthly Timeline for Product Expiration",
           titleY: "Item Quantity",
-          height: 500,
+          height: 200,
           titleTextStyle: {
             color: "333333",
             fontName: "Arial",
@@ -118,19 +120,17 @@ export default {
           minorTicks: 5,
         };
       },
-      chartOptions3() {
-        return {
-          title: "Total Items in Pantry",
-          titleX: "Quantity",
-          height: 500,
-          titleTextStyle: {
-            color: "333333",
-            fontName: "Arial",
-            fontSize: 30,
-          },
-        };
-      },
     };
+  },
+  computed: {
+    graphStyle() {
+      if (this.$vuetify.theme.dark) {
+        return {
+          filter: "invert(88%) brightness(98%)",
+        };
+      }
+      return "";
+    },
   },
   methods: {
     getEnvironmentData(snapshot) {
@@ -159,14 +159,6 @@ export default {
           ["QTY %", weight],
         ];
       }
-      // // Total Items in Pantry
-      // let weight = parseFloat(snapshot.Weight);
-      // if (weight != -1) {
-      //   this.Data = [["Label", "Value"], ["QTY %", weight]];
-      // }
-      // else {
-      //   this.object.keys.length =
-      // }
     },
     getExpirData(snapshot) {
       this.expirData = [
@@ -176,9 +168,10 @@ export default {
         ["3-6", 0],
         ["6+", 0],
       ];
+      this.totalItem = 0;
       for (var itemKey in snapshot) {
         let itemDate = new Date(snapshot[itemKey].expiration);
-
+        this.totalItem = this.totalItem + 1;
         // expired
         let curDate = new Date();
         if (itemDate < curDate) {
