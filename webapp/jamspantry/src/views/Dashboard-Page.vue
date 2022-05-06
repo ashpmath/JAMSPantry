@@ -1,30 +1,34 @@
 <template>
-  <div>
-    <v-card>
-      <v-toolbar class = "pa-2">
-          <v-tabs v-model="tabs" centered>
-                <v-tab>Home</v-tab>
-                <v-tab>Inventory</v-tab>
-                <v-tab>Analytics</v-tab>
-                    <v-tab-item>
-                        <v-container>
-                            <home></home>
-                        </v-container>
-                    </v-tab-item>
-                    <v-tab-item>
-                        <v-container>
-                            <inventory></inventory>
-                        </v-container>
-                    </v-tab-item>
-                    <v-tab-item>
-                        <v-container>
-                            <analytics></analytics>
-                        </v-container>
-                    </v-tab-item>
-            </v-tabs>
-      </v-toolbar>
-    </v-card>
-  </div>
+  <v-card>
+    <v-toolbar>
+      <template>
+        <v-tabs
+          v-model="tabs"
+          centered>
+          <v-tab>Home</v-tab>
+          <v-tab>Inventory</v-tab>
+          <v-tab>Analytics</v-tab>
+        </v-tabs>
+      </template>
+    </v-toolbar>
+    <v-tabs-items v-model="tabs">
+        <v-tab-item>
+            <v-container>
+                <home></home>
+            </v-container>
+        </v-tab-item>
+        <v-tab-item>
+            <v-container>
+                <inventory></inventory>
+            </v-container>
+        </v-tab-item>
+        <v-tab-item>
+            <v-container>
+                <analytics></analytics>
+            </v-container>
+        </v-tab-item>
+    </v-tabs-items>
+  </v-card>
 </template>
 
 <script>
@@ -41,6 +45,7 @@ export default {
   },
   data() {
     return {  
+      tabs: null,
       created() {
       },
       // Array will be automatically processed with visualization.arrayToDataTable function
