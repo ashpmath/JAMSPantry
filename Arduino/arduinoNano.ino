@@ -8,7 +8,7 @@
 #define LOADCELL_DOUT_PIN  3
 #define LOADCELL_SCK_PIN  2
 
-//#define calibration_factor -7050.0 //This value is obtained using the SparkFun_HX711_Calibration sketch
+//This value is obtained using the SparkFun_HX711_Calibration sketch
 // 0-5kg ( 0-11 lb)
 HX711 scale;
 
@@ -28,14 +28,11 @@ BLEShortCharacteristic tempChar("2A6E", BLERead | BLENotify );
 BLEShortCharacteristic humChar("2A6F", BLERead | BLENotify );
 BLEShortCharacteristic weightChar("2A9E", BLERead | BLENotify ); // weight measurement scale, may need to change when testing.
 
-// Weight Sensor
-//HX711 scale(DOUT, CLK);  // Init of library
 
 float temp = 0.0;
 float hum = 0.0;
 int interval = 100; //changed this 
 float weight = 0.0; //weight sensors
-//float totalPercentage = 0.0;
 
 void setup() 
 {
@@ -69,7 +66,6 @@ void setup()
 
   // Get ESS service ready.
   essService.addCharacteristic( tempChar );
-  //BLE.addService( essService );
   essService.addCharacteristic( humChar );
   essService.addCharacteristic( weightChar );
   BLE.addService( essService );
@@ -81,17 +77,6 @@ void setup()
 
 void loop() 
 {
-
-  //Serial.print("Weight: ");
-  //Serial.print(scale.get_units(), 3);  //Up to 3 decimal points
-  //Serial.println(" kg");
-//
-//  if(Serial.available())
-//    {
-//      char t = Serial.read();
-//      if(t == 't' || t == 'T')
-//       scale.tare();  //Reset the scale to zero      
-//    }
       
   // Wait for a BLE central device.
   BLEDevice central = BLE.central();
@@ -143,18 +128,6 @@ void loop()
       temp = HTS.readTemperature();
       hum = HTS.readHumidity();
       weight = scale.get_units();
-
-//      if( weight != 0 ){
-//        float fullMass = 100.0;// Change weight to 0-5kg
-//        float noMass = 0.0;
-//
-//        totalPercentage = (weight/fullMass)*100;
-//
-//      }
-//      else{
-//        Serial.println("Error - NO MASS");
-//      }
-      //temp = round((HTS.readTemperature())*100.0);
       
       Serial.print("Temp: ");
       Serial.println(temp);
@@ -162,9 +135,6 @@ void loop()
       Serial.println(hum);
       Serial.print("Weight: ");
       Serial.println(weight);
-      
-      //Serial.print("Container Capacity (%): ");
-      //Serial.println(totalPercentage);
 
       // Cast to desired format; multiply by 100 to keep desired precision.
       short shortTemp = (short) (temp * 100);
